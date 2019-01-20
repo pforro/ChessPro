@@ -3,7 +3,6 @@ import {chessPiece} from "./chesspiece.js";
 import {dom} from "./dom.js";
 
 
-
 function main(){
     webSocket.initWebSocket();
     dom.buildChessBoard();

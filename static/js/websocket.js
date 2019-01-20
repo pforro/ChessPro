@@ -1,4 +1,4 @@
-import {dom} from "./dom.js";
+import {validation} from "./validation.js";
 
 export let webSocket = {
 
@@ -24,6 +24,8 @@ export let webSocket = {
         piece.remove();
         let targetCell = document.querySelector("#" + moveData.target);
         targetCell.appendChild(clone);
+        validation.trackPiecesInMatrix();
+
     },
 
 

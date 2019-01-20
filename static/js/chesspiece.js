@@ -1,4 +1,4 @@
-
+import {validation} from "./validation.js";
 
 export let chessPiece = {
 
@@ -39,17 +39,17 @@ export let chessPiece = {
 
 
     populateBlackPieces : function() {
-        for(let i=1; i<=8; ++i) {
-            chessPiece.createPiece(i, 'Black', chessPiece.backPieceRow[i-1]);
-            chessPiece.createPiece(i+8, 'Black', chessPiece.frontPieceRow[i-1]);
+        for(let i=0; i<=7; ++i) {
+            chessPiece.createPiece(i, 'Black', chessPiece.backPieceRow[i]);
+            chessPiece.createPiece(i+8, 'Black', chessPiece.frontPieceRow[i]);
         }
     },
 
 
     populateWhitePieces : function(){
-        for(let i=64;i>=57;--i){
-            chessPiece.createPiece(i,'White',chessPiece.backPieceRow[64-i]);
-            chessPiece.createPiece(i-8,'White',chessPiece.frontPieceRow[64-i]);
+        for(let i=63;i>=56;--i){
+            chessPiece.createPiece(i,'White',chessPiece.backPieceRow[63-i]);
+            chessPiece.createPiece(i-8,'White',chessPiece.frontPieceRow[63-i]);
         }
     },
 
@@ -57,5 +57,6 @@ export let chessPiece = {
     populateChessBoard : function () {
         chessPiece.populateBlackPieces();
         chessPiece.populateWhitePieces();
+        validation.trackPiecesInMatrix();
     }
 };
