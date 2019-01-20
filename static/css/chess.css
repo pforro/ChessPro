@@ -21,3 +21,8 @@
     width: 70px;
     z-index: 1000;
 }
+
+
+.gu-mirror {
+    transform: rotate(180deg);
+}
