@@ -6,8 +6,9 @@ export let dom = {
 
     createChessBoardCell : function(cellId, yCor, xCor){
         let cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.classList.add('col');
+        cell.className = 'cell col container vertical-center horizontal-center';
+        // cell.classList.add('cell');
+        // cell.classList.add('col');
         cell.id = 'cell' + cellId;
         cell.dataset.ycor = yCor+1;
         cell.dataset.xcor = xCor+1;
