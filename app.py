@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, send
 
 app = Flask(__name__)
@@ -27,8 +27,13 @@ def move_handler(move_data):
 
 
 @app.route('/')
-def index():
-    return render_template('chess.html')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/game')
+def game():
+    return render_template('chess.html',player=request.args)
 
 
 

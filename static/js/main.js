@@ -9,6 +9,7 @@ function main(){
     dom.buildChessBoard();
     dom.dragulizeCells();
     chessPiece.populateChessBoard();
+    dom.rotateBoard();
 }
 
 main();

@@ -41,6 +41,15 @@ export let dom = {
     },
 
 
+    rotateBoard : function(){
+        let chessBoard = document.querySelector('#chessboard');
+        if(chessBoard.dataset.color === 'black'){
+            chessBoard.style.transform = 'rotate(180deg)';
+            document.querySelectorAll('.piece').forEach(piece=>piece.style.transform='rotate(180deg)');
+        }
+    }
+
+
 
 
 };
