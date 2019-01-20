@@ -20,7 +20,7 @@
 .piece {
     display: block;
     margin: auto;
-    width: 70px;
+    width: 60%;
     z-index: 1000;
 }
 
