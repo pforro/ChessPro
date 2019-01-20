@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+    ChessPro - Chess
+{% endblock %}
+
+
+{% block script %}
+    <script type="module" src="{{ url_for('static',filename='js/main.js') }}"></script>
+{% endblock script %}
+
+
+{% block content %}
+    <div id="chessboard" class="container"></div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="author" content="Krisztian Kaszas, Peter Cs. Forro">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/chess.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='dragula/dragula.css') }}">
+        <script defer src="{{ url_for('static',filename='bootstrap/jquery.js') }}"></script>
+        <script defer src="{{ url_for('static',filename='bootstrap/popper.js') }}"></script>
+        <script defer src="{{ url_for('static',filename='bootstrap/bootstrap.js') }}"></script>
+        <script defer src="{{ url_for('static',filename='dragula/dragula.js') }}"></script>
+        <script defer src="{{ url_for('static',filename='socketio/socketio.js') }}"></script>
+        {% block script %}{% endblock %}
+        <title>{% block page_title %}{% endblock %}</title>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
