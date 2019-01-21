@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from flask_socketio import SocketIO, emit, send
+from flask_socketio import SocketIO, emit
 from datamanager import *
 
 app = Flask(__name__)
@@ -27,11 +27,9 @@ def move_handler(move_data):
 
 
 
-
 @app.route('/load_board')
 def load_board():
     pieces = get_pieces()
-    print(pieces)
     return jsonify({'pieces':pieces})
 
 
@@ -43,9 +41,6 @@ def login():
 @app.route('/game')
 def game():
     return render_template('chess.html',player=request.args)
-
-
-
 
 
 
