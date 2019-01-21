@@ -14,7 +14,7 @@ export let chessPiece = {
 
 
     createPiece : function (piece) {
-        let chessBoardCell = document.querySelector('#' + piece.cellId);
+        let chessBoardCell = document.querySelector('#' + piece.cellid);
         let img = document.createElement('img');
         img.setAttribute('src',`static/pics/${piece.color}${piece.type}.png`);
         img.className = `piece ${piece.color} ${piece.type}`;

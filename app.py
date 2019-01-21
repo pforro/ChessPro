@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit, send
+from datamanager import *
 
 app = Flask(__name__)
 app.secret_key = "ThisIsAVerySecretKey"
@@ -29,7 +30,8 @@ def move_handler(move_data):
 
 @app.route('/load_board')
 def load_board():
-    pieces = [{'id':'BlackRook1','ycor':0,'xcor':0,'cellId':'cell0','type':'Rook','color':'Black'}]
+    pieces = get_pieces()
+    print(pieces)
     return jsonify({'pieces':pieces})
 
 
