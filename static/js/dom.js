@@ -44,7 +44,7 @@ export let dom = {
         let chessBoard = document.querySelector('#chessboard');
         if(chessBoard.dataset.color === 'black'){
             chessBoard.style.transform = 'rotate(180deg)';
-            document.querySelectorAll('.piece').forEach(piece=>piece.style.transform='rotate(180deg)');
+            document.querySelectorAll('.piece').forEach(piece => piece.style.transform='rotate(180deg)');
         }
     }
 };

@@ -3,9 +3,10 @@ import {dom} from "./dom.js";
 
 export let chessPiece = {
 
+    baseURL: 'http://' + document.domain + ':' + location.port + '/load_board',
 
     loadPieces: function(){
-        fetch('http://' + document.domain + ':' + location.port + '/load_board',{method:'GET',mode:'no-cors'})
+        fetch(chessPiece.baseURL,{method:'GET',mode:'no-cors'})
             .then(response => response.json())
             .then(data => {
                 data.pieces.forEach(piece => chessPiece.createPiece(piece));
@@ -25,6 +26,4 @@ export let chessPiece = {
         img.id = piece.id;
         chessBoardCell.appendChild(img);
     },
-
-
 };

@@ -10,4 +10,5 @@ function main(){
     chessPiece.loadPieces();
 }
 
+
 main();
