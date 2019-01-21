@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit, send
 
 app = Flask(__name__)
@@ -26,6 +26,13 @@ def move_handler(move_data):
 
 
 
+
+@app.route('/load_board')
+def load_board():
+    pieces = [{'id':'BlackRook1','ycor':0,'xcor':0,'cellId':'cell0','type':'Rook','color':'Black'}]
+    return jsonify({'pieces':pieces})
+
+
 @app.route('/')
 def login():
     return render_template('login.html')
@@ -34,6 +41,10 @@ def login():
 @app.route('/game')
 def game():
     return render_template('chess.html',player=request.args)
+
+
+
+
 
 
 

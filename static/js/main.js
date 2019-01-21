@@ -7,7 +7,7 @@ function main(){
     webSocket.initWebSocket();
     dom.buildChessBoard();
     dom.dragulizeCells();
-    chessPiece.populateChessBoard();
+    chessPiece.loadPieces();
     dom.rotateBoard();
 }
 

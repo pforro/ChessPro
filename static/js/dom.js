@@ -47,10 +47,6 @@ export let dom = {
             document.querySelectorAll('.piece').forEach(piece=>piece.style.transform='rotate(180deg)');
         }
     }
-
-
-
-
 };
 
 
