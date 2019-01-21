@@ -4,7 +4,7 @@ export let chessPiece = {
 
 
     loadPieces: function(){
-        fetch('http://localhost:5000/load_board',{method:'GET',mode:'no-cors'})
+        fetch('http://' + document.domain + ':' + location.port + '/load_board',{method:'GET',mode:'no-cors'})
             .then(response => response.json())
             .then(data => {
                 data.pieces.forEach(piece => chessPiece.createPiece(piece));
