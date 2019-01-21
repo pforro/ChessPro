@@ -9,10 +9,10 @@ export let chessPiece = {
         fetch(chessPiece.baseURL,{method:'GET',mode:'no-cors'})
             .then(response => response.json())
             .then(data => {
-                data.pieces.forEach(piece => chessPiece.createPiece(piece));
+                //data.pieces.forEach(piece => chessPiece.createPiece(piece));
                 dom.rotateBoard();
                 validation.trackPiecesInMatrix();
-                validation.validDiagonalMoves(4, 4);
+                validation.mapDiagonalMoves(4, 4, -1, 1)
             })
     },
 

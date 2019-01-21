@@ -21,48 +21,20 @@ export let validation = {
         document.matrix = matrix;
     },
 
-
-    validDiagonalMoves : function (yCor, xCor) {
-        let y = yCor;
-        let x = xCor;
+    mapDiagonalMoves : function (yCor, xCor, yIncr, xIncr) {
         let validMoves = [];
-        while(yCor<8 && xCor<8){
-            if(document.matrix[yCor][xCor] === ""){
-                validMoves.push(document.matrix[yCor][xCor]);
+        while (true) {
+            let cell = document.querySelector(`.cell[data-ycor="${yCor}"][data-xcor="${xCor}"]`);
+            if(cell){
+                validMoves.push(cell);
+            } else {
+                //return validMoves;
+                break;
             }
-            yCor++;
-            xCor++;
-        }
-        yCor = y;
-        xCor = x;
-        while(yCor<8 && xCor>0) {
-            if (document.matrix[yCor][xCor] === "") {
-                validMoves.push([yCor, xCor]);
-            }
-            yCor++;
-            xCor--;
-        }
-        yCor = y;
-        xCor = x;
-        while(yCor>0 && xCor>0) {
-            if (document.matrix[yCor][xCor] === "") {
-                validMoves.push([yCor, xCor]);
-            }
-            yCor--;
-            xCor--;
-        }
-        yCor = y;
-        xCor = x;
-        while(yCor>0 && xCor<8) {
-            if (document.matrix[yCor][xCor] === "") {
-                validMoves.push([yCor, xCor]);
-            }
-            yCor--;
-            xCor++;
+            yCor += yIncr;
+            xCor += xIncr;
         }
         console.log(validMoves);
     }
-
-    // function mov
 
 };
