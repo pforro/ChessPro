@@ -1,4 +1,5 @@
 import {validation} from "./validation.js";
+import {dom} from "./dom.js";
 
 export let chessPiece = {
 
@@ -8,6 +9,7 @@ export let chessPiece = {
             .then(response => response.json())
             .then(data => {
                 data.pieces.forEach(piece => chessPiece.createPiece(piece));
+                dom.rotateBoard();
                 validation.trackPiecesInMatrix();
             })
     },
