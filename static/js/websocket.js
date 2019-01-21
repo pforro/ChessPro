@@ -24,8 +24,6 @@ export let webSocket = {
         piece.remove();
         let targetCell = document.querySelector("#" + moveData.target);
         targetCell.appendChild(clone);
-        //validation.trackPiecesInMatrix();
-
     },
 
 

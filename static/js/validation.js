@@ -1,26 +1,6 @@
 
 export let validation = {
 
-    // trackPiecesInMatrix : function () {
-    //     let cells = document.querySelectorAll('.cell');
-    //     let index = 0, matrix = [];
-    //     for(let i=0; i<8; ++i){
-    //         let tmp = [];
-    //         for(let j=0; j<8; ++j){
-    //             if(cells[index].firstElementChild) {
-    //                 let color = cells[index].firstElementChild.dataset.color;
-    //                 let type = cells[index].firstElementChild.dataset.type;
-    //                 tmp.push([color, type]);
-    //             } else {
-    //                 tmp.push('');
-    //             }
-    //             ++index;
-    //         }
-    //         matrix.push(tmp);
-    //     }
-    //     document.matrix = matrix;
-    // },
-
     mapValidMoves : function (yCor, xCor, yIncr, xIncr, maxStep) {
         let validMoves = [];
         let step = 1;
@@ -32,6 +12,55 @@ export let validation = {
             yCor += yIncr; xCor += xIncr;
         }
         return validMoves;
+    },
+
+    moveValidation : function (element) {
+        let type = element.dataset.type;
+        let yCor=Number(element.parentElement.dataset.ycor);
+        let xCor=Number(element.parentElement.dataset.xcor);
+        let validMoves = [];
+        switch (type) {
+            case 'Queen':
+                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 8);
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 8));
+                document.validMoves = validMoves;
+                break;
+
+            case 'King':
+                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 2);
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 2));
+                document.validMoves = validMoves;
+                break;
+
+            case 'Rook':
+                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 8);
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 8));
+                document.validMoves = validMoves;
+                break;
+
+
+            case 'Bishop':
+                validMoves = validation.mapValidMoves(yCor, xCor, -1, 1, 8);
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 8));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 8));
+                document.validMoves = validMoves;
+                break;
+        }
     }
 
 };

@@ -1,4 +1,5 @@
 import {webSocket} from "./websocket.js";
+import {validation} from "./validation.js";
 
 
 export let dom = {
@@ -34,9 +35,16 @@ export let dom = {
     dragulizeCells : function(){
         let cells = document.querySelectorAll('.cell');
         let drake = dragula(Array.from(cells));
+        drake.on('drag', function(element){
+            validation.moveValidation(element);
+        });
         drake.on('drop',function(element,target,source){
-            webSocket.sendMove(element,source,target);
-        })
+            if(!document.validMoves.includes(target)){
+                drake.cancel(true);
+            } else {
+                webSocket.sendMove(element,source,target);
+            }
+        });
     },
 
 
