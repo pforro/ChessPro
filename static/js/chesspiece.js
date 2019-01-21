@@ -22,7 +22,9 @@ export let chessPiece = {
         img.className = `piece ${piece.color} ${piece.type}`;
         img.dataset.type = piece.type;
         img.dataset.color = piece.color;
+        img.dataset.steps = 0;
         img.id = piece.id;
         chessBoardCell.appendChild(img);
+        chessBoardCell.dataset.active = true;
     },
 };

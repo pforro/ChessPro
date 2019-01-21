@@ -21,8 +21,13 @@ export let webSocket = {
     moveHandler : function(moveData){
         let piece = document.querySelector("#" + moveData.element);
         let clone = piece.cloneNode(true);
-        piece.remove();
+        let sourceCell = document.querySelector("#" + moveData.source);
         let targetCell = document.querySelector("#" + moveData.target);
+        clone.dataset.steps = Number(clone.dataset.steps) + 1;
+        sourceCell.dataset.active = false;
+        targetCell.dataset.active = true;
+        piece.remove();
+
         targetCell.appendChild(clone);
     },
 
