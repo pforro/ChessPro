@@ -32,12 +32,25 @@ export let dom = {
         }
     },
 
+    highlight : function() {
+        document.validMoves.forEach(cell => cell.style.backgroundImage = `url("static/pics/highlight.jpg")` );
+    },
+
+    revertHighlight : function() {
+        document.validMoves.forEach(cell => cell.style.backgroundImage = `none`);
+    },
+
 
     dragulizeCells : function(){
         let cells = document.querySelectorAll('.cell');
         let drake = dragula(Array.from(cells));
         drake.on('drag', function(element){
-            validation.moveValidation(element);
+            if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
+                drake.cancel(true);
+            } else {
+                validation.moveValidation(element);
+                dom.highlight();
+            }
         });
         drake.on('drop',function(element,target,source){
             if(!document.validMoves.includes(target)){
@@ -45,13 +58,17 @@ export let dom = {
             } else {
                 webSocket.sendMove(element,source,target);
             }
+            dom.revertHighlight();
         });
+        drake.on('cancel',function(){
+            dom.revertHighlight();
+        })
     },
 
 
     rotateBoard : function(){
         let chessBoard = document.querySelector('#chessboard');
-        if(chessBoard.dataset.color === 'black'){
+        if(chessBoard.dataset.color === 'Black'){
             chessBoard.style.transform = 'rotate(180deg)';
             document.querySelectorAll('.piece').forEach(piece => piece.style.transform='rotate(180deg)');
         }

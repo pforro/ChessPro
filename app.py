@@ -35,6 +35,10 @@ def load_board():
 
 @app.route('/')
 def login():
+    if request.args:
+        login = request.args.to_dict()
+        login['color'] = login['color'].capitalize()
+        return render_template('chess.html',player=login)
     return render_template('login.html')
 
 
