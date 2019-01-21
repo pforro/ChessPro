@@ -95,6 +95,18 @@ export let validation = {
             case 'Pawn':
                 validation.mapValidMovesPawn(element);
                 break;
+
+            case 'Knight':
+                validMoves = validation.mapValidMoves(yCor, xCor, -2, 1, 2);
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 2, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 2, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 2, 1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 2, -1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -2, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -2, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -2, -1, 2));
+                document.validMoves = validMoves;
+                break;
         }
     }
 

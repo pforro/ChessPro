@@ -8,8 +8,8 @@ function main(){
     dom.buildChessBoard();
     dom.dragulizeCells();
     chessPiece.loadPieces();
-
 }
 
 
 main();
+
