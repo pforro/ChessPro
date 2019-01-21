@@ -12,6 +12,7 @@ export let chessPiece = {
                 data.pieces.forEach(piece => chessPiece.createPiece(piece));
                 dom.rotateBoard();
                 validation.trackPiecesInMatrix();
+                validation.validDiagonalMoves(4, 4);
             })
     },
 

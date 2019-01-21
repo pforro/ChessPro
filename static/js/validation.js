@@ -19,8 +19,49 @@ export let validation = {
             matrix.push(tmp);
         }
         document.matrix = matrix;
-    }
+    },
 
+
+    validDiagonalMoves : function (yCor, xCor) {
+        let y = yCor;
+        let x = xCor;
+        let validMoves = [];
+        while(yCor<8 && xCor<8){
+            if(document.matrix[yCor][xCor] === ""){
+                validMoves.push(document.matrix[yCor][xCor]);
+            }
+            yCor++;
+            xCor++;
+        }
+        yCor = y;
+        xCor = x;
+        while(yCor<8 && xCor>0) {
+            if (document.matrix[yCor][xCor] === "") {
+                validMoves.push([yCor, xCor]);
+            }
+            yCor++;
+            xCor--;
+        }
+        yCor = y;
+        xCor = x;
+        while(yCor>0 && xCor>0) {
+            if (document.matrix[yCor][xCor] === "") {
+                validMoves.push([yCor, xCor]);
+            }
+            yCor--;
+            xCor--;
+        }
+        yCor = y;
+        xCor = x;
+        while(yCor>0 && xCor<8) {
+            if (document.matrix[yCor][xCor] === "") {
+                validMoves.push([yCor, xCor]);
+            }
+            yCor--;
+            xCor++;
+        }
+        console.log(validMoves);
+    }
 
     // function mov
 
