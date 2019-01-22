@@ -23,17 +23,25 @@ export let pawn = {
 
 
     getDiagonalCell : function(yCor, xCor, direction, xIncr) {
-        return document.querySelector(`.cell[data-ycor="${yCor + direction}"][data-xcor="${xCor + xIncr}"]`)
+        return document.querySelector(`.cell[data-ycor="${yCor + direction}"][data-xcor="${xCor + xIncr}"]`);
+    },
+
+
+    isValidDiagonal : function (cell) {
+        let color = validation.getOwnColor();
+        return  cell && cell.dataset.active === 'true' &&
+                cell.firstElementChild.dataset.color !== color &&
+                cell.firstElementChild.dataset.type !== 'King';
     },
 
 
     mapDiagonalMoves : function(yCor, xCor, direction) {
         let diagCellLeft = pawn.getDiagonalCell(yCor,xCor,direction,-1);
         let diagCellRight = pawn.getDiagonalCell(yCor,xCor,direction,1);
-        if (diagCellLeft && diagCellLeft.dataset.active === 'true') {
+        if (pawn.isValidDiagonal(diagCellLeft)) {
             document.validMoves.push(diagCellLeft);
         }
-        if (diagCellRight && diagCellRight.dataset.active === 'true') {
+        if (pawn.isValidDiagonal(diagCellRight)) {
             document.validMoves.push(diagCellRight);
         }
     },

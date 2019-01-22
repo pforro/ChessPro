@@ -8,15 +8,42 @@ import {pawn} from "./pieces/pawn.js";
 
 export let validation = {
 
+    getOwnColor : function() {
+       return document.querySelector('#chessboard').dataset.color;
+    },
+
+
+    isObstacleAhead : function(cell,step,color) {
+        let obstacle = cell.firstElementChild;
+        return  obstacle && step >=2 &&
+                (obstacle.dataset.color === color || obstacle.dataset.type === 'King');
+    },
+
+
+    isEnemyAhead : function(cell,color){
+        let enemy = cell.firstElementChild;
+        return enemy && enemy.dataset.color !== color;
+    },
+
+
+    getCell : function (yCor, xCor) {
+        return document.querySelector(`.cell[data-ycor="${yCor}"][data-xcor="${xCor}"]`);
+    },
+
+
     mapValidMoves : function (yCor, xCor, yIncr, xIncr, maxStep) {
         let validMoves = [];
+        let color = validation.getOwnColor();
         let step = 1;
-        while (step++ <= maxStep) {
-            let cell = document.querySelector(`.cell[data-ycor="${yCor}"][data-xcor="${xCor}"]`);
-            if(cell){
+        while (step <= maxStep) {
+            let cell = validation.getCell(yCor,xCor);
+            if(cell && !validation.isObstacleAhead(cell,step,color)){
                 validMoves.push(cell);
+                if(validation.isEnemyAhead(cell,color)) break;
+                yCor += yIncr; xCor += xIncr; ++step;
+            } else {
+                break;
             }
-            yCor += yIncr; xCor += xIncr;
         }
         return validMoves;
     },
@@ -47,5 +74,4 @@ export let validation = {
                 break;
         }
     }
-
 };

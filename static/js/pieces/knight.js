@@ -1,13 +1,12 @@
 import {validation} from "../validation.js";
 
 
-
 export let knight = {
+
     steps : [
         [-2, 1, 2], [-1, 2, 2], [1, 2, 2], [2, 1, 2],
         [2, -1, 2], [1, -2, 2], [-1, -2, 2], [-2  , -1, 2],
     ],
-
 
 
     knightMove : function(yCor, xCor) {
