@@ -31,6 +31,7 @@ export let dragndrop = {
             if (!document.validMoves.includes(target)) {
                 drake.cancel(true);
             } else {
+                validation.kill(target);
                 webSocket.sendMove(element, source, target);
                 dom.revertHighlight();
             }
@@ -45,5 +46,5 @@ export let dragndrop = {
             }
         });
     },
-    
+
 };

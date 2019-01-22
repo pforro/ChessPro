@@ -16,7 +16,7 @@ export let pawn = {
 
 
     mapFrontObstacle : function() {
-        if(document.validMoves[1].firstElementChild){
+        if(document.validMoves[1] && document.validMoves[1].firstElementChild){
             document.validMoves.splice(1,1);
         }
     },

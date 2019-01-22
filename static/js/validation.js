@@ -1,3 +1,4 @@
+import {webSocket} from "./websocket.js";
 import {queen} from "./pieces/queen.js";
 import {king} from "./pieces/king.js";
 import {rook} from "./pieces/rook.js";
@@ -46,6 +47,16 @@ export let validation = {
             }
         }
         return validMoves;
+    },
+
+
+    kill : function(target){
+        let color = validation.getOwnColor();
+        let enemyColor = (color === 'White') ? 'Black' : 'White';
+        let enemy = target.querySelector(`.${enemyColor}`);
+        if(enemy){
+            webSocket.sendKill(enemy.id);
+        }
     },
 
 

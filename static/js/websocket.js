@@ -18,6 +18,17 @@ export let webSocket = {
     },
 
 
+    sendKill :function(enemyId){
+        webSocket.socket.emit('send_kill', enemyId);
+    },
+
+
+    killHandler : function(enemyId){
+        document.querySelector(`#${enemyId}`).remove();
+    },
+
+
+
     moveHandler : function(moveData){
         let piece = document.querySelector("#" + moveData.element);
         let clone = piece.cloneNode(true);
@@ -38,9 +49,17 @@ export let webSocket = {
     },
 
 
+    initKillEvent : function () {
+        webSocket.socket.on('kill',function(enemyId) {
+            webSocket.killHandler(enemyId);
+        });
+    },
+
+
     initWebSocket : function(){
         webSocket.initConnectionEvent();
         webSocket.initMoveEvent();
+        webSocket.initKillEvent();
     },
 };
 

@@ -27,6 +27,12 @@ def move_handler(move_data):
 
 
 
+@socketio.on('send_kill')
+def kill_handler(enemyId):
+    emit('kill', enemyId, broadcast=True)
+
+
+
 @app.route('/load_board')
 def load_board():
     pieces = get_pieces()
