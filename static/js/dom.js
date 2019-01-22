@@ -32,16 +32,15 @@ export let dom = {
         }
     },
 
+
     highlight : function() {
         document.validMoves.forEach(cell => cell.style.backgroundImage = `url("static/pics/highlight.jpg")` );
     },
 
+
     revertHighlight : function() {
         document.validMoves.forEach(cell => cell.style.backgroundImage = `none`);
     },
-
-
-
 
 
     rotateBoard : function(){

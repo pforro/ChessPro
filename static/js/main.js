@@ -1,6 +1,7 @@
+import {dom} from "./dom.js";
 import {webSocket} from "./websocket.js";
 import {dragndrop} from "./dragndrop.js";
-import {dom} from "./dom.js";
+
 
 
 function main(){

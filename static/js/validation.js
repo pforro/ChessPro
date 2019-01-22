@@ -104,7 +104,7 @@ export let validation = {
                 validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 2, -1, 2));
                 validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -2, 2));
                 validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -2, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -2, -1, 2));
+                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -2  , -1, 2));
                 document.validMoves = validMoves;
                 break;
         }

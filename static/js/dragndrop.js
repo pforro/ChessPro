@@ -6,39 +6,71 @@ import {dom} from "./dom.js"
 
 export let dragndrop = {
 
-
     initDragndrop : function(){
         let cells = document.querySelectorAll('.cell');
-        document.drake = dragula(Array.from(cells));
-        document.drake.on('drag', dragndrop.dragHandler);
-        document.drake.on('drop', dragndrop.dropHandler);
-        document.drake.on('cancel', dragndrop.cancelHandler);
+        let drake = dragula(Array.from(cells));
+        dragndrop.dragHandler(drake);
+        dragndrop.dropHandler(drake);
+        dragndrop.cancelHandler(drake);
     },
 
 
-    dragHandler: function (element) {
-        if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
-            document.drake.cancel(true);
-        } else {
-            validation.moveValidation(element);
-            dom.highlight();
-        }
+    dragHandler : function(drake) {
+        drake.on('drag', function(element){
+            if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
+                drake.cancel(true);
+            } else {
+                validation.moveValidation(element);
+                dom.highlight();
+            }});
     },
 
 
-    dropHandler: function (element, target, source) {
-        if (!document.validMoves.includes(target)) {
-            document.drake.cancel(true);
-        } else {
-            webSocket.sendMove(element, source, target);
-            dom.revertHighlight();
-        }
+    dropHandler : function(drake) {
+        drake.on('drop', function(element,target,source){
+            if (!document.validMoves.includes(target)) {
+                drake.cancel(true);
+            } else {
+                webSocket.sendMove(element, source, target);
+                dom.revertHighlight();
+            }
+        });
     },
 
 
-    cancelHandler: function (element) {
-        if (element.dataset.color === document.querySelector('#chessboard').dataset.color) {
-            dom.revertHighlight();
-        }
+    cancelHandler : function(drake) {
+        drake.on('cancel', function(element){
+            if (element.dataset.color === document.querySelector('#chessboard').dataset.color) {
+                dom.revertHighlight();
+            }
+        });
     },
+
+
+
+    // dragHandler: function (element) {
+    //     if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
+    //         drake.cancel(true);
+    //     } else {
+    //         validation.moveValidation(element);
+    //         dom.highlight();
+    //     }
+    // },
+
+
+    // dropHandler: function (element, target, source) {
+    //     if (!document.validMoves.includes(target)) {
+    //         drake.cancel(true);
+    //     } else {
+    //         webSocket.sendMove(element, source, target);
+    //         dom.revertHighlight();
+    //     }
+    // },
+
+
+    // cancelHandler: function (element) {
+    //     if (element.dataset.color === document.querySelector('#chessboard').dataset.color) {
+    //         dom.revertHighlight();
+    //     }
+    // },
 };
