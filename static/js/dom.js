@@ -72,7 +72,32 @@ export let dom = {
             chessBoard.style.transform = 'rotate(180deg)';
             document.querySelectorAll('.piece').forEach(piece => piece.style.transform='rotate(180deg)');
         }
-    }
+    },
+
+
+    loadPieces: function(){
+        let baseURL = 'http://' + document.domain + ':' + location.port + '/load_board';
+        fetch(baseURL,{method:'GET',mode:'no-cors'})
+            .then(response => response.json())
+            .then(data => {
+                data.pieces.forEach(piece => dom.createPiece(piece));
+                dom.rotateBoard();
+            })
+    },
+
+
+    createPiece : function (piece) {
+        let chessBoardCell = document.querySelector('#' + piece.cellid);
+        let img = document.createElement('img');
+        img.setAttribute('src',`static/pics/${piece.color}${piece.type}.png`);
+        img.className = `piece ${piece.color} ${piece.type}`;
+        img.dataset.type = piece.type;
+        img.dataset.color = piece.color;
+        img.dataset.steps = 0;
+        img.id = piece.id;
+        chessBoardCell.appendChild(img);
+        chessBoardCell.dataset.active = true;
+    },
 };
 
 
