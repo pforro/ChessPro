@@ -7,7 +7,18 @@ import {knight} from "./pieces/knight.js";
 import {pawn} from "./pieces/pawn.js";
 
 
+
 export let validation = {
+
+    showTurn : function(){
+        let turn = document.querySelector('#turn');
+        turn.textContent = validation.isYourTurn();
+    },
+
+
+    isYourTurn : function(){
+        return document.querySelector('#chessboard').dataset.turn === 'true';
+    },
 
     getOwnColor : function() {
        return document.querySelector('#chessboard').dataset.color;

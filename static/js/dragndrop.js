@@ -17,23 +17,30 @@ export let dragndrop = {
 
     dragHandler : function(drake) {
         drake.on('drag', function(element){
-            if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
-                drake.cancel(true);
+            if (!validation.isYourTurn()){
+                drake.cancel();
             } else {
-                validation.moveValidation(element);
-                dom.highlight();
-            }});
+                if (element.dataset.color !== validation.getOwnColor()) {
+                    drake.cancel(true);
+                } else {
+                    validation.moveValidation(element);
+                    dom.highlight();
+                }
+            }
+        });
     },
 
 
     dropHandler : function(drake) {
         drake.on('drop', function(element,target,source){
-            if (!document.validMoves.includes(target)) {
-                drake.cancel(true);
-            } else {
-                validation.kill(target);
-                webSocket.sendMove(element, source, target);
-                dom.revertHighlight();
+            if (validation.isYourTurn()){
+                if (!document.validMoves.includes(target)) {
+                    drake.cancel(true);
+                } else {
+                    validation.kill(target);
+                    webSocket.sendMove(element, source, target);
+                    dom.revertHighlight();
+                }
             }
         });
     },
@@ -41,7 +48,7 @@ export let dragndrop = {
 
     cancelHandler : function(drake) {
         drake.on('cancel', function(element){
-            if (element.dataset.color === document.querySelector('#chessboard').dataset.color) {
+            if (element.dataset.color === validation.getOwnColor() && validation.isYourTurn()) {
                 dom.revertHighlight();
             }
         });

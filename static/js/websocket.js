@@ -39,6 +39,8 @@ export let webSocket = {
         targetCell.dataset.active = true;
         piece.remove();
         targetCell.appendChild(clone);
+        document.querySelector('#chessboard').dataset.turn = (validation.isYourTurn()) ? 'false' : 'true';
+        validation.showTurn();
     },
 
 

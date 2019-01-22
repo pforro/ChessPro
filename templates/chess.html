@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% macro init_turn() %}
+    {% if player.color == 'White' %}
+        "true"
+    {% else %}
+        "false"
+    {% endif %}
+{% endmacro %}
+
 
 {% block page_title %}
     ChessPro - Chess
@@ -12,9 +20,6 @@
 
 
 {% block content %}
-    <div id="chessboard" class="container" data-nickname="{{ player.nickname }}" data-color="{{ player.color }}"></div>
-
-
-
-
+{#    <h1 id="turn"></h1>#}
+    <div id="chessboard" class="container" data-nickname="{{ player.nickname }}" data-color="{{ player.color }}" data-turn={{ init_turn() }}></div>
 {% endblock %}
