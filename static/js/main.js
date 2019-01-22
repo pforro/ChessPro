@@ -6,7 +6,7 @@ import {dom} from "./dom.js";
 function main(){
     webSocket.initWebSocket();
     dom.buildChessBoard();
-    dragndrop.dragulizeCells();
+    dragndrop.initDragndrop();
     dom.loadPieces();
 }
 
