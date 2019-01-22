@@ -1,3 +1,10 @@
+import {queen} from "./pieces/queen.js";
+import {king} from "./pieces/king.js";
+import {rook} from "./pieces/rook.js";
+import {bishop} from "./pieces/bishop.js";
+import {knight} from "./pieces/knight.js";
+import {pawn} from "./pieces/pawn.js";
+
 
 export let validation = {
 
@@ -14,98 +21,29 @@ export let validation = {
         return validMoves;
     },
 
-    mapValidMovesPawn : function (element) {
-        let validMoves = [];
-        let dir = (element.dataset.color === 'Black') ? 1 : -1;
-        let yCor = Number(element.parentElement.dataset.ycor);
-        let xCor = Number(element.parentElement.dataset.xcor);
-        if(Number(element.dataset.steps) < 1){
-            validMoves = validation.mapValidMoves(yCor, xCor, dir, 0, 3);
-        } else {
-            validMoves = validation.mapValidMoves(yCor, xCor, dir, 0, 2);
-        }
-        let diagCell1 = document.querySelector(`.cell[data-ycor="${yCor+dir}"][data-xcor="${xCor+1}"]`);
-        let diagCell2 = document.querySelector(`.cell[data-ycor="${yCor+dir}"][data-xcor="${xCor-1}"]`);
-
-
-        if(diagCell1){
-            if(diagCell1.dataset.active === 'true'){
-                validMoves = validMoves.concat([document.querySelector(`.cell[data-ycor="${yCor + dir}"][data-xcor="${xCor + 1}"]`)]);
-            }
-        }
-        if(diagCell2){
-            if(diagCell2.dataset.active === 'true'){
-                validMoves = validMoves.concat([document.querySelector(`.cell[data-ycor="${yCor+dir}"][data-xcor="${xCor-1}"]`)]);
-            }
-        }
-        document.validMoves = validMoves;
-
-
-
-
-    },
 
     moveValidation : function (element) {
         let type = element.dataset.type;
         let yCor=Number(element.parentElement.dataset.ycor);
         let xCor=Number(element.parentElement.dataset.xcor);
-        let validMoves = [];
         switch (type) {
             case 'Queen':
-                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 8);
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 8));
-                document.validMoves = validMoves;
+                queen.queenMove(yCor, xCor);
                 break;
-
             case 'King':
-                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 2);
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 2));
-                document.validMoves = validMoves;
+                king.kingMove(yCor, xCor);
                 break;
-
             case 'Rook':
-                validMoves = validation.mapValidMoves(yCor, xCor, -1, 0, 8);
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, 1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 0, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 0, -1, 8));
-                document.validMoves = validMoves;
+                rook.rookMove(yCor, xCor);
                 break;
-
-
             case 'Bishop':
-                validMoves = validation.mapValidMoves(yCor, xCor, -1, 1, 8);
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -1, 8));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -1, 8));
-                document.validMoves = validMoves;
+                bishop.bishopMove(yCor, xCor);
                 break;
-
             case 'Pawn':
-                validation.mapValidMovesPawn(element);
+                pawn.pawnMoves(element, yCor, xCor);
                 break;
-
             case 'Knight':
-                validMoves = validation.mapValidMoves(yCor, xCor, -2, 1, 2);
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, 2, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, 2, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 2, 1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 2, -1, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, 1, -2, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -1, -2, 2));
-                validMoves = validMoves.concat(validation.mapValidMoves(yCor, xCor, -2  , -1, 2));
-                document.validMoves = validMoves;
+                knight.knightMove(yCor, xCor);
                 break;
         }
     }

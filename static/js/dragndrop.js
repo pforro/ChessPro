@@ -45,32 +45,5 @@ export let dragndrop = {
             }
         });
     },
-
-
-
-    // dragHandler: function (element) {
-    //     if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
-    //         drake.cancel(true);
-    //     } else {
-    //         validation.moveValidation(element);
-    //         dom.highlight();
-    //     }
-    // },
-
-
-    // dropHandler: function (element, target, source) {
-    //     if (!document.validMoves.includes(target)) {
-    //         drake.cancel(true);
-    //     } else {
-    //         webSocket.sendMove(element, source, target);
-    //         dom.revertHighlight();
-    //     }
-    // },
-
-
-    // cancelHandler: function (element) {
-    //     if (element.dataset.color === document.querySelector('#chessboard').dataset.color) {
-    //         dom.revertHighlight();
-    //     }
-    // },
+    
 };
