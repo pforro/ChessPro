@@ -41,29 +41,7 @@ export let dom = {
     },
 
 
-    dragulizeCells : function(){
-        let cells = document.querySelectorAll('.cell');
-        let drake = dragula(Array.from(cells));
-        drake.on('drag', function(element){
-            if (element.dataset.color !== document.querySelector('#chessboard').dataset.color) {
-                drake.cancel(true);
-            } else {
-                validation.moveValidation(element);
-                dom.highlight();
-            }
-        });
-        drake.on('drop',function(element,target,source){
-            if(!document.validMoves.includes(target)){
-                drake.cancel(true);
-            } else {
-                webSocket.sendMove(element,source,target);
-            }
-            dom.revertHighlight();
-        });
-        drake.on('cancel',function(){
-            dom.revertHighlight();
-        })
-    },
+
 
 
     rotateBoard : function(){

@@ -1,12 +1,12 @@
 import {webSocket} from "./websocket.js";
-import {chessPiece} from "./chesspiece.js";
+import {dragndrop} from "./dragndrop.js";
 import {dom} from "./dom.js";
 
 
 function main(){
     webSocket.initWebSocket();
     dom.buildChessBoard();
-    dom.dragulizeCells();
+    dragndrop.dragulizeCells();
     dom.loadPieces();
 }
 
