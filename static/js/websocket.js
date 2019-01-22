@@ -27,7 +27,6 @@ export let webSocket = {
         sourceCell.dataset.active = false;
         targetCell.dataset.active = true;
         piece.remove();
-
         targetCell.appendChild(clone);
     },
 
