@@ -48,9 +48,7 @@ create table if not exists owners
 
 create table if not exists init_board
 (
-	id text not null
-		constraint table_name_pkey
-			primary key,
+	id text not null,
 	ycor text not null,
 	xcor text,
 	cellid text not null,
