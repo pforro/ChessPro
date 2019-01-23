@@ -38,7 +38,6 @@ def redirect_if_user_in_session(function):
 
 
 
-
 def set_permanent_session(remember_me,days):
     if remember_me:
         session.permanent = True
@@ -125,13 +124,14 @@ def sign_in():
 
 
 @app.route('/logout')
+@login_required
 def log_out():
     session.clear()
     return redirect(url_for('sign_in'))
 
 
-
 @app.route('/confirm_email/')
+@login_required
 def confirm_email():
     try:
         token = request.args.get('token')
@@ -141,10 +141,13 @@ def confirm_email():
         flash('Your account has been activated!')
         return redirect(url_for('sign_in'))
     except SignatureExpired:
+        flash('Your registration has expired\nA new activation link has been sent!')
         abort(404)
 
 
+
 @app.route('/')
+@login_required
 def login():
     if request.args:
         login = request.args.to_dict()
@@ -153,7 +156,9 @@ def login():
     return render_template('login.html')
 
 
+
 @app.route('/game')
+@login_required
 def game():
     return render_template('chess.html',player=request.args)
 
