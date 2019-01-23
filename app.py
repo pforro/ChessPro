@@ -142,7 +142,6 @@ def log_out():
 
 
 @app.route('/confirm_email/')
-@login_required
 def confirm_email():
     try:
         token = request.args.get('token')
