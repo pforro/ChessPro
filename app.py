@@ -138,7 +138,8 @@ def confirm_email():
         username = request.args.get('username')
         s.loads(token,salt='email-confirm',max_age=3600)
         confirm_account(username)
-        return redirect(url_for('login'))
+        flash('Your account has been activated!')
+        return redirect(url_for('sign_in'))
     except SignatureExpired:
         abort(404)
 
