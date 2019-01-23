@@ -67,9 +67,10 @@ def connection_handler(msg):
 
 @socketio.on('join')
 def on_join(data):
-    room = session.get('board_name')
+    room = session['board_name']
+    username = session['username']
     join_room(room)
-    emit('proba',f'{room}',room=room)
+    emit('proba',f'User: {username} has connected!',room=room)
 
 
 
