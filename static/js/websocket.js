@@ -2,10 +2,7 @@ import {validation} from "./validation.js";
 
 export let webSocket = {
 
-    room : document.querySelector('#chessboard').dataset.boardname,
-
-    socket :    io.connect('http://' + document.domain + ':' + location.port
-                ,{transports: ['websocket']}),
+    socket : io.connect('http://' + document.domain + ':' + location.port,{transports: ['websocket']}),
 
 
     initConnectionEvent : function() {
@@ -14,16 +11,15 @@ export let webSocket = {
         });
     },
 
-    // initConnectionEvent : function() {
-    //     webSocket.socket.on('connect',function(socket){
-    //         webSocket.socket.join(webSocket.room);
-    //     })
-    // },
-
 
     sendMove : function(element, source, target){
         let moveData = {element:element.id,source:source.id,target:target.id};
         webSocket.socket.emit('send_move',moveData);
+    },
+
+    sendChat : function(input,usrname){
+        let data = {message:input,username:usrname};
+        webSocket.socket.emit('send_chat',data);
     },
 
 
@@ -53,9 +49,14 @@ export let webSocket = {
 
 
     initMoveEvent : function () {
-        webSocket.socket.on('proba',function(moveData) {
-            // webSocket.moveHandler(moveData);
-            console.log(moveData)
+        webSocket.socket.on('move',function(moveData) {
+            webSocket.moveHandler(moveData);
+        });
+    },
+
+    initConnectionMessage : function () {
+        webSocket.socket.on('join',function(data) {
+            console.log(`User: ${data.username} has connected!`)
         });
     },
 
@@ -66,11 +67,22 @@ export let webSocket = {
         });
     },
 
+    initChatEvent : function() {
+        webSocket.socket.on('chat',function(data){
+            console.log(data);
+            let chat = document.querySelector('#chat');
+            chat.value += `${data.username}: ${data.message}\n`;
+        })
+    },
+
+
 
     initWebSocket : function(){
         webSocket.initConnectionEvent();
+        webSocket.initConnectionMessage();
         webSocket.initMoveEvent();
         webSocket.initKillEvent();
+        webSocket.initChatEvent();
     },
 };
 

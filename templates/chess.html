@@ -21,6 +21,16 @@
 
 
 {% block content %}
-{#    <h1 id="turn"></h1>#}
-    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <textarea disabled cols="20" rows="20" id="chat"></textarea>
+                <input type="text" id="chat-input">
+                <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
+            </div>
+            <div class="col">
+                <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
