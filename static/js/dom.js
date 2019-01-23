@@ -34,7 +34,7 @@ export let dom = {
 
 
     highlight : function() {
-        document.validMoves.forEach(cell => cell.style.backgroundImage = `url("static/pics/highlight.jpg")` );
+        document.validMoves.forEach(cell => cell.style.backgroundImage = `url("/static/pics/highlight.jpg")` );
     },
 
 
@@ -53,10 +53,14 @@ export let dom = {
 
 
     loadPieces: function(){
+        let formData = new FormData();
+        let boardName = document.querySelector('#chessboard').dataset.boardname;
+        formData.append('board_name',boardName);
         let baseURL = 'http://' + document.domain + ':' + location.port + '/load_board';
-        fetch(baseURL,{method:'GET',mode:'no-cors'})
+        fetch(baseURL,{method:'POST',body:formData})
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 data.pieces.forEach(piece => dom.createPiece(piece));
                 dom.rotateBoard();
             })
@@ -66,7 +70,7 @@ export let dom = {
     createPiece : function (piece) {
         let chessBoardCell = document.querySelector('#' + piece.cellid);
         let img = document.createElement('img');
-        img.setAttribute('src',`static/pics/${piece.color}${piece.type}.png`);
+        img.setAttribute('src',`/static/pics/${piece.color}${piece.type}.png`);
         img.className = `piece ${piece.color} ${piece.type}`;
         img.dataset.type = piece.type;
         img.dataset.color = piece.color;

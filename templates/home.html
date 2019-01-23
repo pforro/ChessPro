@@ -7,11 +7,13 @@
 
 
 {% block script %}
+    <script defer src="{{ url_for('static',filename="js_home/home.js") }}"></script>
 {% endblock script %}
 
 
 {% block navbar %}
     <a href="{{ url_for('log_out') }}">Logout: {{ session.get('username') }}</a>
+    <button id="newgame" type="button" class="btn btn-outline-success">New Game</button>
 {% endblock %}
 
 
@@ -24,16 +26,53 @@
             </tr>
             {% for room in rooms %}
                 <tr>
-                    <td>{{ room.board_name }}</td>
+                    <td><a href="{{ url_for('game',board_name=room.board_name) }}">{{ room.board_name }}</a></td>
                     <td>{{ room.owners }}</td>
                 </tr>
             {% endfor %}
         </table>
     {% endif %}
 {% endblock %}
-
-
 {% block modal %}
+    <div class="modal fade" id="newgame-dialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                         <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Room name:</label>
+                            <input type="text" class="form-control" id="input-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Select Opponent:</label>
+                            <select class="form-control" id="select-opponent">
+                                {% for opponent in opponents %}
+                                    <option value="{{ opponent.id }}">{{ opponent.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="select-color" class="col-form-label">Select Color:</label>
+                             <select class="form-control" id="select-color">
+                                 <option value="White">White</option>
+                                 <option value="Black">Black</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="submit-modal" type="button" class="btn btn-primary">Create Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

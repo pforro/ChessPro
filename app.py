@@ -24,7 +24,7 @@ def login_required(function):
     @wraps(function)
     def decorated_function(*args, **kwargs):
         if not verify_session(session.get('id')):
-            abort(404)
+            return redirect(url_for('sign_in'))
         return function(*args, **kwargs)
     return decorated_function
 
@@ -84,9 +84,9 @@ def kill_handler(enemyId):
 
 
 
-@app.route('/load_board')
+@app.route('/load_board',methods=['POST'])
 def load_board():
-    pieces = get_pieces()
+    pieces = get_pieces(request.form['board_name'])
     return jsonify({'pieces':pieces})
 
 
@@ -130,7 +130,10 @@ def sign_in():
 def home():
     user_id = session['id']
     rooms = get_rooms_by_user_id(user_id)
-    return render_template('home.html',rooms=rooms)
+    opponents = get_opponents(user_id)
+    return render_template('home.html',
+                           rooms = rooms,
+                           opponents = opponents)
 
 
 @app.route('/logout')
@@ -141,7 +144,7 @@ def log_out():
 
 
 
-@app.route('/confirm_email/')
+@app.route('/confirm_email')
 def confirm_email():
     try:
         token = request.args.get('token')
@@ -156,10 +159,24 @@ def confirm_email():
 
 
 
-@app.route('/game')
+@app.route('/newgame',methods=['POST'])
+def newgame():
+    board_name = request.form['board_name']
+    color = request.form['color']
+    opponent_id = request.form['opponent_id']
+    user_id = session['id']
+    new_game(board_name, user_id, color, opponent_id)
+    return jsonify('ok')
+
+
+
+@app.route('/game/<string:board_name>')
 @login_required
-def game():
-    return render_template('chess.html',player=request.args)
+def game(board_name):
+    color = get_color(board_name,session['id'])
+    return render_template('chess.html',
+                           board_name = board_name,
+                           color = color)
 
 
 

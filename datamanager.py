@@ -58,7 +58,7 @@ def new_board(cursor,name):
                 cellid text not null,
                 color text not null,
                 type text not null,
-                status boolean  );  '''
+                status boolean);  '''
     query = sql.SQL(query).format(sql.Identifier(name))
     cursor.execute(query)
 
@@ -125,3 +125,24 @@ def get_rooms_by_user_id(cursor,user_id):
     params = {'user_id':user_id}
     cursor.execute(query,params)
     return cursor.fetchall()
+
+
+
+@connection_handler
+def get_opponents(cursor,user_id):
+    query = ''' SELECT * FROM users
+                WHERE id!=%(user_id)s '''
+    params = {'user_id':user_id}
+    cursor.execute(query,params)
+    return cursor.fetchall()
+
+
+
+@connection_handler
+def get_color(cursor,board_name,user_id):
+    query = ''' SELECT owners.owner_color AS color FROM owners
+                INNER JOIN rooms ON owners.room_id = rooms.id
+                WHERE rooms.board_name = %(board_name)s and owners.owner_id = %(user_id)s'''
+    params = {'board_name':board_name,'user_id':user_id}
+    cursor.execute(query,params)
+    return cursor.fetchone()['color']

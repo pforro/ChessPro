@@ -2,7 +2,7 @@
 
 
 {% macro init_turn() %}
-    {% if player.color == 'White' %}
+    {% if color == 'White' %}
         "true"
     {% else %}
         "false"
@@ -22,5 +22,5 @@
 
 {% block content %}
 {#    <h1 id="turn"></h1>#}
-    <div id="chessboard" class="container" data-nickname="{{ player.nickname }}" data-color="{{ player.color }}" data-turn={{ init_turn() }}></div>
+    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
 {% endblock %}
