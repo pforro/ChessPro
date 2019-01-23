@@ -17,6 +17,8 @@ mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
 # new_game('hello', 10, 'Black', 11)
+# heroku pg:psql --app gopnik-chess < init.sql
+
 
 def login_required(function):
     @wraps(function)
@@ -98,7 +100,7 @@ def sign_up():
         usr_input['password'] = hash_password(usr_input['password'])
         register(usr_input)
         send_verification_token(usr_input)
-        return redirect(url_for('login'))
+        return redirect(url_for('sign_in'))
     return render_template('signup.html', form=form)
 
 
