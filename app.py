@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, abort
+from flask import Flask, render_template, request, jsonify, redirect, url_for, abort, session, flash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_socketio import SocketIO, emit
 from flask_mail import Mail, Message
+from datetime import timedelta
 from datamanager import *
+from functools import wraps
 from forms import *
 from hash import *
 
@@ -15,6 +17,37 @@ mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
 
+
+def login_required(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        if not verify_session(session.get('id')):
+            abort(404)
+        return function(*args, **kwargs)
+    return decorated_function
+
+
+
+def redirect_if_user_in_session(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        if  verify_session(session.get('id')):
+            return redirect(url_for('login'))
+        return function(*args, **kwargs)
+    return decorated_function
+
+
+
+
+def set_permanent_session(remember_me,days):
+    if remember_me:
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(days=days)
+
+
+
+
+
 def send_verification_token(usr_input):
     email = usr_input.get('email')
     username = usr_input.get('username')
@@ -23,8 +56,6 @@ def send_verification_token(usr_input):
     link = url_for('confirm_email',username=username, token=token, _external=True)
     message.body = f"Your activation link is: {link}"
     mail.send(message)
-
-
 
 
 
@@ -62,16 +93,41 @@ def load_board():
 
 
 @app.route('/signup',methods=['GET','POST'])
+@redirect_if_user_in_session
 def sign_up():
-    register_form= RegistrationForm()
-    if register_form.validate_on_submit():
-        usr_input = register_form.data
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        usr_input = form.data
         usr_input['password'] = hash_password(usr_input['password'])
         register(usr_input)
         send_verification_token(usr_input)
         return redirect(url_for('login'))
-    return render_template('register.html',form=register_form)
+    return render_template('signup.html', form=form)
 
+
+
+@app.route('/signin',methods=['GET','POST'])
+@redirect_if_user_in_session
+def sign_in():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = get_user(form.data['email'])
+        if user and verify_password(form.data['password'],user['password']):
+            if not user['confirmed']:
+                flash("Your account has not been confirmed")
+                return redirect(request.referrer)
+            set_permanent_session(form.data['remember_me'], 10)
+            session['id'] = user['id']
+            session['username'] = user['username']
+            return redirect(url_for('game'))
+    return render_template('signin.html',form=form)
+
+
+
+@app.route('/logout')
+def log_out():
+    session.clear()
+    return redirect(url_for('sign_in'))
 
 
 
@@ -87,10 +143,6 @@ def confirm_email():
         abort(404)
 
 
-
-
-
-
 @app.route('/')
 def login():
     if request.args:
@@ -103,7 +155,6 @@ def login():
 @app.route('/game')
 def game():
     return render_template('chess.html',player=request.args)
-
 
 
 

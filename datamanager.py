@@ -23,3 +23,22 @@ def confirm_account(cursor,username):
                 WHERE username=%(username)s'''
     params = {'username':username}
     cursor.execute(query,params)
+
+
+@connection_handler
+def get_user(cursor,email):
+    query = ''' SELECT * FROM users
+                WHERE email=%(email)s'''
+    params = {'email':email}
+    cursor.execute(query,params)
+    return cursor.fetchone()
+
+
+
+@connection_handler
+def verify_session(cursor,id):
+    query = ''' SELECT * FROM users
+                WHERE id=%(id)s'''
+    params = {'id':id}
+    cursor.execute(query,params)
+    return cursor.fetchone()
