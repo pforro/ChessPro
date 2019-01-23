@@ -17,15 +17,15 @@ export let dragndrop = {
 
     dragHandler : function(drake) {
         drake.on('drag', function(element){
-            if (!validation.isYourTurn()){
-                drake.cancel();
-            } else {
+            if (validation.isYourTurn()){
                 if (element.dataset.color !== validation.getOwnColor()) {
-                    drake.cancel(true);
+                    drake.cancel();
                 } else {
                     validation.moveValidation(element);
                     dom.highlight();
                 }
+            } else {
+                drake.cancel();
             }
         });
     },

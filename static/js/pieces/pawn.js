@@ -23,7 +23,8 @@ export let pawn = {
 
 
     getDiagonalCell : function(yCor, xCor, direction, xIncr) {
-        return document.querySelector(`.cell[data-ycor="${yCor + direction}"][data-xcor="${xCor + xIncr}"]`);
+        let selector = `.cell[data-ycor="${yCor + direction}"][data-xcor="${xCor + xIncr}"]`;
+        return document.querySelector(selector);
     },
 
 

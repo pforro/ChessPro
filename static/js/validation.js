@@ -20,6 +20,13 @@ export let validation = {
         return document.querySelector('#chessboard').dataset.turn === 'true';
     },
 
+
+    setTurn : function() {
+        let chessboard = document.querySelector('#chessboard');
+        chessboard.dataset.turn = (validation.isYourTurn()) ? 'false' : 'true';
+    },
+
+
     getOwnColor : function() {
        return document.querySelector('#chessboard').dataset.color;
     },

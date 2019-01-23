@@ -28,7 +28,6 @@ export let webSocket = {
     },
 
 
-
     moveHandler : function(moveData){
         let piece = document.querySelector("#" + moveData.element);
         let clone = piece.cloneNode(true);
@@ -39,8 +38,8 @@ export let webSocket = {
         targetCell.dataset.active = true;
         piece.remove();
         targetCell.appendChild(clone);
-        document.querySelector('#chessboard').dataset.turn = (validation.isYourTurn()) ? 'false' : 'true';
-        validation.showTurn();
+        validation.setTurn();
+        // validation.showTurn();
     },
 
 

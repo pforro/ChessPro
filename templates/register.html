@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+
+{% block page_title %}
+    ChessPro - Register
+{% endblock %}
+
+
+{% block script %}
+{% endblock script %}
+
+
+{% block content %}
+    <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.username(placeholder="User Name") }}
+        {{ form.email(placeholder="E-mail") }}
+        {{ form.password(placeholder="Password") }}
+        {{ form.confirm_password(placeholder="Confirm Password") }}
+        {{ form.submit() }}
+    </form>
+{% endblock %}

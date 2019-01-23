@@ -10,14 +10,9 @@ function main(){
     dom.buildChessBoard();
     dragndrop.initDragndrop();
     dom.loadPieces();
-    validation.showTurn();
+    // validation.showTurn();
 }
 
 
 main();
 
-
-
-// websocket-ot átnevezni mondjuk socket-events-re
-// lekezelni az útban álló saját színű bábukat
-// leütés kezelése
