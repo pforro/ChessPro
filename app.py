@@ -3,8 +3,8 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_socketio import SocketIO, emit
 from flask_mail import Mail, Message
 from datetime import timedelta
-from datamanager import *
 from functools import wraps
+from datamanager import *
 from forms import *
 from hash import *
 
@@ -16,7 +16,7 @@ app.config.from_pyfile('config.cfg')
 mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
-
+# new_game('hello', 10, 'Black', 11)
 
 def login_required(function):
     @wraps(function)
@@ -32,7 +32,7 @@ def redirect_if_user_in_session(function):
     @wraps(function)
     def decorated_function(*args, **kwargs):
         if  verify_session(session.get('id')):
-            return redirect(url_for('login'))
+            return redirect(url_for('home'))
         return function(*args, **kwargs)
     return decorated_function
 
@@ -42,8 +42,6 @@ def set_permanent_session(remember_me,days):
     if remember_me:
         session.permanent = True
         app.permanent_session_lifetime = timedelta(days=days)
-
-
 
 
 
@@ -105,7 +103,7 @@ def sign_up():
 
 
 
-@app.route('/signin',methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
 @redirect_if_user_in_session
 def sign_in():
     form = LoginForm()
@@ -118,9 +116,19 @@ def sign_in():
             set_permanent_session(form.data['remember_me'], 10)
             session['id'] = user['id']
             session['username'] = user['username']
-            return redirect(url_for('game'))
+            return redirect(url_for('home'))
+        else:
+            flash('Wrong e-mail or password')
     return render_template('signin.html',form=form)
 
+
+
+@app.route('/home')
+@login_required
+def home():
+    user_id = session['id']
+    rooms = get_rooms_by_user_id(user_id)
+    return render_template('home.html',rooms=rooms)
 
 
 @app.route('/logout')
@@ -128,6 +136,7 @@ def sign_in():
 def log_out():
     session.clear()
     return redirect(url_for('sign_in'))
+
 
 
 @app.route('/confirm_email/')
@@ -143,17 +152,6 @@ def confirm_email():
     except SignatureExpired:
         flash('Your registration has expired\nA new activation link has been sent!')
         abort(404)
-
-
-
-@app.route('/')
-@login_required
-def login():
-    if request.args:
-        login = request.args.to_dict()
-        login['color'] = login['color'].capitalize()
-        return render_template('chess.html',player=login)
-    return render_template('login.html')
 
 
 

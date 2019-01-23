@@ -25,9 +25,8 @@ create table if not exists rooms
 		constraint rooms_pkey
 			primary key,
 	board_name text not null,
-	status text not null
+	status text
 );
-
 
 create unique index if not exists rooms_id_uindex
 	on rooms (id);
@@ -42,11 +41,12 @@ create table if not exists owners
 			references users,
 	room_id integer
 		constraint owners_rooms_id_fk
-			references rooms
+			references rooms,
+	owner_color text
 );
 
 
-create table if not exists new_board
+create table if not exists init_board
 (
 	id text not null
 		constraint table_name_pkey
@@ -59,7 +59,6 @@ create table if not exists new_board
 	status boolean
 );
 
-
 create unique index if not exists table_name_id_uindex
-	on new_board (id);
+	on init_board (id);
 

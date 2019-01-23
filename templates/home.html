@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}
+    ChessPro - Home
+{% endblock %}
+
+
+{% block script %}
+{% endblock script %}
+
+
+{% block navbar %}
+    <a href="{{ url_for('log_out') }}">Logout: {{ session.get('username') }}</a>
+{% endblock %}
+
+
+{% block content %}
+    {% if rooms %}
+        <table>
+            <tr>
+                <th>Room</th>
+                <th>Players</th>
+            </tr>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{ room.board_name }}</td>
+                    <td>{{ room.owners }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
+
+
+{% block modal %}
+{% endblock %}
+
+
