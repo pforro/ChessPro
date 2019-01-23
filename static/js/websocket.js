@@ -2,14 +2,23 @@ import {validation} from "./validation.js";
 
 export let webSocket = {
 
-    socket : io.connect('http://' + document.domain + ':' + location.port,{transports: ['websocket']}),
+    room : document.querySelector('#chessboard').dataset.boardname,
+
+    socket :    io.connect('http://' + document.domain + ':' + location.port
+                ,{transports: ['websocket']}),
 
 
     initConnectionEvent : function() {
         webSocket.socket.on('connect',function(){
-            webSocket.socket.emit('connection','User has connected!')
+            webSocket.socket.emit('join','User has connected!')
         });
     },
+
+    // initConnectionEvent : function() {
+    //     webSocket.socket.on('connect',function(socket){
+    //         webSocket.socket.join(webSocket.room);
+    //     })
+    // },
 
 
     sendMove : function(element, source, target){
@@ -44,8 +53,9 @@ export let webSocket = {
 
 
     initMoveEvent : function () {
-        webSocket.socket.on('move',function(moveData) {
-            webSocket.moveHandler(moveData);
+        webSocket.socket.on('proba',function(moveData) {
+            // webSocket.moveHandler(moveData);
+            console.log(moveData)
         });
     },
 

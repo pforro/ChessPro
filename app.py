@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, abort, session, flash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from flask_mail import Mail, Message
 from datetime import timedelta
 from functools import wraps
@@ -62,6 +62,14 @@ def send_verification_token(usr_input):
 def connection_handler(msg):
     print(f'Message: {msg}')
     emit('log', msg, broadcast=True)
+
+
+
+@socketio.on('join')
+def on_join(data):
+    room = session.get('board_name')
+    join_room(room)
+    emit('proba',f'{room}',room=room)
 
 
 
@@ -173,6 +181,7 @@ def newgame():
 @app.route('/game/<string:board_name>')
 @login_required
 def game(board_name):
+    session['board_name'] = board_name
     color = get_color(board_name,session['id'])
     return render_template('chess.html',
                            board_name = board_name,
