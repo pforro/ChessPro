@@ -16,6 +16,7 @@ app.config.from_pyfile('config.cfg')
 mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
+
 # new_game('hello', 10, 'Black', 11)
 # heroku pg:psql --app gopnik-chess < init.sql
 
@@ -53,7 +54,7 @@ def send_verification_token(usr_input):
     token = s.dumps(email, salt='email-confirm')
     message = Message('Confirm Email', sender="forropcs@gmail.com", recipients=[email])
     link = url_for('confirm_email',username=username, token=token, _external=True)
-    message.body = f"Your activation link is: {link}"
+    message.body = f'Your activation link is: {link}'
     mail.send(message)
 
 
@@ -133,6 +134,7 @@ def sign_in():
             set_permanent_session(form.data['remember_me'], 10)
             session['id'] = user['id']
             session['username'] = user['username']
+            flash('You have logged in successfully!','alert-success')
             return redirect(url_for('home'))
         else:
             flash('Wrong e-mail or password')
@@ -155,6 +157,7 @@ def home():
 @login_required
 def log_out():
     session.clear()
+    flash('You have successfully logged out!', 'alert-success')
     return redirect(url_for('sign_in'))
 
 
@@ -180,6 +183,7 @@ def newgame():
     color = request.form['color']
     opponent_id = request.form['opponent_id']
     user_id = session['id']
+    flash('New game has been created!','alert-success')
     new_game(board_name, user_id, color, opponent_id)
     return jsonify('ok')
 
@@ -199,6 +203,7 @@ def game(board_name):
 @app.route('/delete-room/<string:board_name>/<int:room_id>')
 def delete_room(board_name, room_id):
     remove_room(board_name, room_id)
+    flash('Game has been deleted!', 'alert-danger')
     return redirect(url_for('home'))
 
 

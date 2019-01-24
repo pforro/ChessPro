@@ -1,26 +1,24 @@
 body {
-    font-family: 'Mina', sans-serif;
+    font-family: 'Russo One', sans-serif;
     background-color: lightgrey;
 }
 
 
 #chessboard {
     display: block;
-    margin: 100px auto;
+    margin: auto;
     padding: 0;
-    width: 800px;
-    height: 800px;
-
+    width: 700px;
+    height: 700px;
 }
 
 .cell {
     padding: 0;
     margin: 0;
-    width: 100px;
-    height: 100px;
+    width: 87px;
+    height: 87px;
     border: 1px solid black;
     display: inline-grid;
-
 }
 
 
@@ -33,7 +31,6 @@ body {
 
 
 table {
-    margin-top: 150px;
     border-radius: 20px;
     outline: none;
 }
@@ -44,7 +41,61 @@ table {
 }
 
 
-.cell {
-    box-shadow: 2px 2px 2px 2px black;
+
+#main-title {
+    font-size: 40px;
 }
 
+
+#match {
+    margin-top: 80px;
+}
+
+
+#flash {
+    margin-top: 90px;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+#chat {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+
+#chat-container {
+    padding: 20px;
+    margin-left: 100px;
+    margin-right: 50px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px 2px black;
+    width: 250px;
+    display: inline-grid;
+}
+
+
+#chess-container {
+    display: inline-grid;
+}
+
+
+#chat-input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 200px;
+    height: 100px;
+}
+
+
+#submit-btn {
+   width: 200px;
+}
+
+#content-container{
+    display: block;
+    margin: auto;
+}

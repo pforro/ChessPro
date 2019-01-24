@@ -70,9 +70,9 @@ export let webSocket = {
 
     initChatEvent : function() {
         webSocket.socket.on('chat',function(data){
-            console.log(data);
             let chat = document.querySelector('#chat');
-            chat.value += `${data.username}: ${data.message}\n`;
+            chat.innerHTML += `<p><b>${data.username}:</b> ${data.message}</p>`;
+            chat.scrollTop = chat.scrollHeight;
         })
     },
 
