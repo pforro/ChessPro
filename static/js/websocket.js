@@ -13,7 +13,8 @@ export let webSocket = {
 
 
     sendMove : function(element, source, target){
-        let moveData = {element:element.id,source:source.id,target:target.id};
+        let newCors = {yCor: target.dataset.ycor, xCor: target.dataset.xcor}
+        let moveData = {element:element.id,source:source.id,target:target.id, newCors};
         webSocket.socket.emit('send_move',moveData);
     },
 

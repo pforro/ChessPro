@@ -87,6 +87,7 @@ def chat_handler(data):
 
 @socketio.on('send_move')
 def move_handler(move_data):
+    update_moves(session['board_name'], move_data)
     emit('move', move_data,room=session['room'])
 
 

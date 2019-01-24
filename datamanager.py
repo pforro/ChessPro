@@ -146,3 +146,18 @@ def get_color(cursor,board_name,user_id):
     params = {'board_name':board_name,'user_id':user_id}
     cursor.execute(query,params)
     return cursor.fetchone()['color']
+
+
+@connection_handler
+def update_moves(cursor, board_name, movedata):
+    query = ''' UPDATE {}
+                SET ycor=%(yCor)s, xcor=%(xCor)s, cellid=%(cellId)s
+                WHERE id=%(id)s'''
+    query = sql.SQL(query).format(sql.Identifier(board_name))
+    params = {
+        'yCor': movedata['newCors']['yCor'],
+        'xCor': movedata['newCors']['xCor'],
+        'cellId': movedata['target'],
+        'id': movedata['element']
+    }
+    cursor.execute(query, params)
