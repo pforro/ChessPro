@@ -117,10 +117,10 @@ def new_game(cursor,board_name,usr_id1,color,usr_id2):
 
 @connection_handler
 def get_rooms_by_user_id(cursor,user_id):
-    query = ''' SELECT rooms.board_name, string_agg(users.username,', ') AS owners FROM rooms
+    query = ''' SELECT rooms.board_name, rooms.id, string_agg(users.username,', ') AS owners FROM rooms
                 INNER JOIN owners on rooms.id = owners.room_id
                 INNER JOIN users on owners.owner_id = users.id
-                GROUP BY rooms.board_name
+                GROUP BY rooms.board_name, rooms.id
                 HAVING %(user_id)s = ANY(array_agg(users.id))'''
     params = {'user_id':user_id}
     cursor.execute(query,params)
@@ -170,4 +170,14 @@ def update_kill(cursor, board_name, id):
                 WHERE id=%(id)s'''
     query = sql.SQL(query).format(sql.Identifier(board_name))
     params = {'id': id}
+    cursor.execute(query, params)
+
+
+@connection_handler
+def remove_room(cursor, board_name, room_id):
+    query = ''' DROP TABLE {};
+                DELETE FROM rooms
+                WHERE id = %(room_id)s;'''
+    query = sql.SQL(query).format(sql.Identifier(board_name))
+    params = {'room_id': room_id}
     cursor.execute(query, params)

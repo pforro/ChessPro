@@ -145,6 +145,7 @@ def sign_in():
 def home():
     user_id = session['id']
     rooms = get_rooms_by_user_id(user_id)
+    print(rooms)
     opponents = get_opponents(user_id)
     return render_template('home.html',
                            rooms = rooms,
@@ -193,6 +194,13 @@ def game(board_name):
     return render_template('chess.html',
                            board_name = board_name,
                            color = color)
+
+
+
+@app.route('/delete-room/<string:board_name>/<int:room_id>')
+def delete_room(board_name, room_id):
+    remove_room(board_name, room_id)
+    return redirect(url_for('home'))
 
 
 
