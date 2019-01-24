@@ -53,12 +53,22 @@ table {
 }
 
 
-#flash {
+#flash-home {
     margin-top: 90px;
     font-size: 20px;
     text-align: center;
 }
 
+#flash-auth {
+    font-size: 20px;
+    text-align: center;
+}
+
+
+#flash-auth p {
+    text-align: center;
+    width: 100%;
+}
 
 #chat {
     height: 500px;
@@ -70,7 +80,6 @@ table {
     box-shadow: 1px 1px 1px 1px black;
     background-color: #dddddd;
 }
-
 
 
 
@@ -93,4 +102,20 @@ table {
     width: 60%;
     margin-left: 200px;
     margin-top: 100px;
+}
+
+
+.auth-form {
+    width: 500px;
+    display: block;
+    margin: 200px auto;
+    box-shadow: 2px 2px 2px 2px black;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #d8d8d8;
+}
+
+.auth-title {
+    margin-bottom: 20px;
 }

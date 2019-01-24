@@ -11,30 +11,43 @@
 {% endblock script %}
 
 
+{% block title %}
+    Sign In!
+{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="auth-form">
+        <h1 class="auth-title">ChessPro - Sign In!</h1>
         <form action="" method="POST">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">
+                            <p id="flash-auth">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             {{ form.hidden_tag() }}
             <div class="form-group row">
-                 <div class="col-sm-10">
-                    {{ form.email(placeholder="E-mail") }}
-                 </div>
+                {{ form.email(placeholder="E-mail",class="form-control") }}
             </div>
             <div class="form-group row">
-                 <div class="col-sm-10">
-                    {{ form.password(placeholder="Password",class="form-control") }}
-                 </div>
+                {{ form.password(placeholder="Password",class="form-control") }}
             </div>
             <div class="form-group row">
-                 <div class="col-sm-10">
-                    {{ form.remember_me() }}
-                 </div>
-            </div>
-            <div class="form-group row">
-                 <div class="col-sm-10">
-                    {{ form.submit() }}
-                 </div>
+                {{ form.submit(class="form-control btn btn-outline-success") }}
             </div>
         </form>
+        <hr>
+        <div class="row">
+             <div class="col text-left">
+                 <h6>Remember Me: {{ form.remember_me(id='check') }}</h6>
+            </div>
+            <div class="col text-right">
+                <h6>Not a member? <a href="{{ url_for('sign_up') }}">Sign Up!</a></h6>
+            </div>
+        </div>
     </div>
 {% endblock %}
+

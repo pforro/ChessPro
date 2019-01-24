@@ -116,6 +116,7 @@ def sign_up():
         usr_input['password'] = hash_password(usr_input['password'])
         register(usr_input)
         send_verification_token(usr_input)
+        flash('Confirmation e-mail has been sent!','alert-success')
         return redirect(url_for('sign_in'))
     return render_template('signup.html', form=form)
 
@@ -129,7 +130,7 @@ def sign_in():
         user = get_user(form.data['email'])
         if user and verify_password(form.data['password'],user['password']):
             if not user['confirmed']:
-                flash("Your account has not been confirmed")
+                flash("Your account has not been confirmed",'alert-danger')
                 return redirect(request.referrer)
             set_permanent_session(form.data['remember_me'], 10)
             session['id'] = user['id']
@@ -137,7 +138,7 @@ def sign_in():
             flash('You have logged in successfully!','alert-success')
             return redirect(url_for('home'))
         else:
-            flash('Wrong e-mail or password')
+            flash('Wrong e-mail or password!','alert-danger')
     return render_template('signin.html',form=form)
 
 
@@ -169,7 +170,7 @@ def confirm_email():
         username = request.args.get('username')
         s.loads(token,salt='email-confirm',max_age=3600)
         confirm_account(username)
-        flash('Your account has been activated!')
+        flash('Your account has been activated!','alert-success')
         return redirect(url_for('sign_in'))
     except SignatureExpired:
         flash('Your registration has expired\nA new activation link has been sent!')
