@@ -164,7 +164,7 @@ def update_moves(cursor, board_name, movedata):
 
 
 @connection_handler
-def update_kill(cursor, board_name, id)
+def update_kill(cursor, board_name, id):
     query = ''' UPDATE {}
                 SET status=false
                 WHERE id=%(id)s'''
