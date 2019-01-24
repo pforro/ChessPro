@@ -161,3 +161,13 @@ def update_moves(cursor, board_name, movedata):
         'id': movedata['element']
     }
     cursor.execute(query, params)
+
+
+@connection_handler
+def update_kill(cursor, board_name, id)
+    query = ''' UPDATE {}
+                SET status=false
+                WHERE id=%(id)s'''
+    query = sql.SQL(query).format(sql.Identifier(board_name))
+    params = {'id': id}
+    cursor.execute(query, params)

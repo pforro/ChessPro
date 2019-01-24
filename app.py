@@ -94,6 +94,7 @@ def move_handler(move_data):
 
 @socketio.on('send_kill')
 def kill_handler(enemyId):
+    update_kill(enemyId)
     emit('kill', enemyId, room=session['room'])
 
 
