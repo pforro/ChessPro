@@ -1,3 +1,9 @@
+body {
+    font-family: 'Mina', sans-serif;
+    background-color: lightgrey;
+}
+
+
 #chessboard {
     display: block;
     margin: 100px auto;
@@ -23,5 +29,22 @@
     margin: auto;
     width: 60%;
     z-index: 1000;
+}
+
+
+table {
+    margin-top: 150px;
+    border-radius: 20px;
+    outline: none;
+}
+
+
+.navbar {
+    background-color: #26292D;
+}
+
+
+.cell {
+    box-shadow: 2px 2px 2px 2px black;
 }
 

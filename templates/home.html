@@ -11,36 +11,48 @@
 {% endblock script %}
 
 
-{% block navbar %}
-    <a href="{{ url_for('log_out') }}">Logout: {{ session.get('username') }}</a>
+{% block navigation %}
     <button id="newgame" type="button" class="btn btn-outline-success">New Game</button>
+    <a href="{{ url_for('log_out') }}" class="btn btn-outline-danger">Logout: {{ session.get('username') }}</a>
+{% endblock %}
+
+
+
+{% block title %}
+    Home
 {% endblock %}
 
 
 {% block content %}
     {% if rooms %}
-        <table>
-            <tr>
-                <th>Room</th>
-                <th>Players</th>
-                <th>Actions</th>
-            </tr>
-            {% for room in rooms %}
-                <tr>
-                    <td>{{ room.board_name }}</td>
-                    <td>{{ room.owners }}</td>
-                    <td>
-                        <a class="btn btn-success btn-sm" href="{{ url_for('game',board_name=room.board_name) }}">Play</a>
-                        <a class="btn btn-danger btn-sm" href="{{ url_for('delete_room',board_name=room.board_name, room_id=room.id) }}">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="container text-center">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Room Name</th>
+                        <th scope="col">Players</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in rooms %}
+                        <tr>
+                            <td>{{ room.board_name }}</td>
+                            <td>{{ room.owners }}</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="{{ url_for('game',board_name=room.board_name) }}">Play</a>
+                                <a class="btn btn-danger btn-sm" href="{{ url_for('delete_room',board_name=room.board_name, room_id=room.id) }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 {% endblock %}
 {% block modal %}
     <div class="modal fade" id="newgame-dialog" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
@@ -72,8 +84,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="submit-modal" type="button" class="btn btn-primary">Create Game</button>
+                    <button id="submit-modal" type="button" class="btn btn-outline-dark">Create Game</button>
                 </div>
             </div>
         </div>

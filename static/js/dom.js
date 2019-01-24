@@ -12,7 +12,7 @@ export let dom = {
         cell.dataset.ycor = yCor;
         cell.dataset.xcor = xCor;
         cell.dataset.active = false;
-        cell.style.backgroundColor = ((xCor+yCor)% 2 === 0 ) ? '#844A28' : 'lightgrey';
+        cell.style.backgroundColor = ((xCor+yCor)% 2 === 0 ) ? '#606060' : 'lightgrey';
         return cell
     },
 

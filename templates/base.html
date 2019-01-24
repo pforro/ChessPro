@@ -3,6 +3,7 @@
     <head>
         <meta name="author" content="Krisztian Kaszas, Peter Cs. Forro">
         <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Mina" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ url_for('static',filename='dragula/dragula.css') }}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/chess.css') }}">
@@ -15,7 +16,16 @@
         <title>{% block page_title %}{% endblock %}</title>
     </head>
     <body>
-    {% block navbar %}{% endblock %}
+        {#--------------------------------------NAVBAR--------------------------------------#}
+        {#----------------------------------------------------------------------------------#}
+        <nav class="navbar navbar-dark navbar-fixed-top mb-3 sticky-top">
+            <div class="col">
+                <a class="navbar-brand text-white">ChessPro: {% block title %}{% endblock %}</a>
+            </div>
+            <div class="col-">
+                {% block navigation %}{% endblock %}
+            </div>
+        </nav>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <ul class=flashes>
@@ -25,7 +35,9 @@
                 </ul>
             {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
         {% block modal %}{% endblock %}
     </body>
 </html>

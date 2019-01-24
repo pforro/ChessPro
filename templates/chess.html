@@ -21,7 +21,6 @@
 
 
 {% block content %}
-    <div class="container">
         <div class="row">
             <div class="col">
                 <textarea disabled cols="20" rows="20" id="chat"></textarea>
@@ -32,5 +31,4 @@
                 <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
             </div>
         </div>
-    </div>
 {% endblock %}
