@@ -20,15 +20,30 @@
 {% endblock script %}
 
 
+{% block title %}
+    {{ session.get('board_name') }}
+{% endblock %}
+
+
+{% block navigation %}
+    <a href="{{ url_for('home') }}" class="btn btn-outline-danger">Exit Game</a>
+{% endblock %}
+
+
+
 {% block content %}
-    <div id="content-container">
-        <div id="chat-container">
-            <div data-spy="scroll" data-offset="0" id="chat"></div>
-            <input type="text" id="chat-input"><br>
-            <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
-        </div>
-        <div id="chess-container">
-            <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
+    <div class="content-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-">
+                    <div data-spy="scroll" data-offset="0" id="chat"></div>
+                    <input type="text" id="chat-input"><br>
+                    <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
+                </div>
+                <div class="col-sm">
+                    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
