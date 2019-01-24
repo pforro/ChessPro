@@ -145,7 +145,6 @@ def sign_in():
 def home():
     user_id = session['id']
     rooms = get_rooms_by_user_id(user_id)
-    print(rooms)
     opponents = get_opponents(user_id)
     return render_template('home.html',
                            rooms = rooms,

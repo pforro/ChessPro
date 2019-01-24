@@ -28,6 +28,7 @@ create table if not exists rooms
 	status text
 );
 
+
 create unique index if not exists rooms_id_uindex
 	on rooms (id);
 
@@ -41,14 +42,17 @@ create table if not exists owners
 			references users,
 	room_id integer
 		constraint owners_rooms_id_fk
-			references rooms,
+			references rooms
+				on delete cascade,
 	owner_color text
 );
 
 
 create table if not exists init_board
 (
-	id text not null,
+	id text not null
+		constraint table_name_pkey
+			primary key,
 	ycor text not null,
 	xcor text,
 	cellid text not null,
@@ -56,6 +60,7 @@ create table if not exists init_board
 	type text not null,
 	status boolean
 );
+
 
 create unique index if not exists table_name_id_uindex
 	on init_board (id);
