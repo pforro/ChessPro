@@ -1,4 +1,8 @@
 import {validation} from "./validation.js";
+import {chat} from "./chat.js";
+import {dragndrop} from "./dragndrop.js";
+import {timer} from "./timer.js";
+
 
 export let webSocket = {
 
@@ -7,20 +11,41 @@ export let webSocket = {
 
     initConnectionEvent : function() {
         webSocket.socket.on('connect',function(){
-            webSocket.socket.emit('join','User has connected!')
+            $('#waiting-dialoge').modal('show');
+            webSocket.socket.emit('join','join');
         });
     },
 
 
     sendMove : function(element, source, target){
-        let newCors = {yCor: target.dataset.ycor, xCor: target.dataset.xcor}
+        let newCors = {yCor: target.dataset.ycor, xCor: target.dataset.xcor};
         let moveData = {element:element.id,source:source.id,target:target.id, newCors};
         webSocket.socket.emit('send_move',moveData);
+    },
+
+
+    startGame : function(data){
+        let username = document.querySelector('#chessboard').dataset.nickname;
+        if(username !== data) webSocket.socket.emit('start_game','startgame');
+    },
+
+
+    startGameHandler : function(data) {
+        dragndrop.initDragndrop();
+        setTimeout(()=>$('#waiting-dialoge').modal('hide'),1000);
+        if(validation.isYourTurn()){
+            timer.startTimer();
+        }
     },
 
     sendChat : function(input,usrname){
         let data = {message:input,username:usrname};
         webSocket.socket.emit('send_chat',data);
+    },
+
+
+    timeOut : function(){
+        webSocket.socket.emit('time_out','timeout');
     },
 
 
@@ -45,7 +70,26 @@ export let webSocket = {
         piece.remove();
         targetCell.appendChild(clone);
         validation.setTurn();
-        // validation.showTurn();
+    },
+
+
+    timeOutHandler : function(data) {
+        validation.setTurn();
+    },
+
+
+
+    initTimeout : function() {
+        webSocket.socket.on('timeOut',function(data) {
+            webSocket.timeOutHandler(data);
+        });
+    },
+
+
+    initStartGame : function() {
+        webSocket.socket.on('startGame',function(data) {
+            webSocket.startGameHandler(data);
+        });
     },
 
 
@@ -55,9 +99,12 @@ export let webSocket = {
         });
     },
 
-    initConnectionMessage : function () {
-        webSocket.socket.on('join',function(data) {
-            console.log(`User: ${data.username} has connected!`)
+
+    initConnection : function () {
+        webSocket.socket.on('joined',function(data) {
+            console.log(`User: ${data} has connected!`);
+            chat.autoMessage(`${data} has connected!`);
+            webSocket.startGame(data);
         });
     },
 
@@ -80,10 +127,12 @@ export let webSocket = {
 
     initWebSocket : function(){
         webSocket.initConnectionEvent();
-        webSocket.initConnectionMessage();
+        webSocket.initConnection();
         webSocket.initMoveEvent();
         webSocket.initKillEvent();
         webSocket.initChatEvent();
+        webSocket.initTimeout();
+        webSocket.initStartGame();
     },
 };
 

@@ -58,6 +58,7 @@ def send_verification_token(usr_input):
     mail.send(message)
 
 
+
 def join_chess_room():
     room = session['board_name']
     session['room'] = room
@@ -65,10 +66,9 @@ def join_chess_room():
 
 
 
-@socketio.on('connection')
-def connection_handler(msg):
-    print(f'Message: {msg}')
-    emit('log', msg, broadcast=True)
+# @socketio.on('connection')
+# def connection_handler(msg):
+#     emit('log', msg, broadcast=True)
 
 
 
@@ -76,13 +76,25 @@ def connection_handler(msg):
 def join(data):
     join_chess_room()
     username = session['username']
-    emit('join',{'username':username},room=session['room'])
+    emit('joined',username,room=session['room'])
 
 
 
 @socketio.on('send_chat')
 def chat_handler(data):
     emit('chat', data, room=session['room'])
+
+
+
+@socketio.on('time_out')
+def timeOut_handler(data):
+    emit('timeOut', data, room=session['room'])
+
+
+
+@socketio.on('start_game')
+def start_game_handler(data):
+    emit('startGame', data, room=session['room'])
 
 
 

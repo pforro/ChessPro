@@ -36,12 +36,46 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-">
+                    <div id="time"></div>
                     <div data-spy="scroll" data-offset="0" id="chat"></div>
                     <input type="text" id="chat-input"><br>
                     <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
                 </div>
                 <div class="col-sm">
-                    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}"></div>
+                    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}" data-players="0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="waiting-dialoge" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">System Message</h5>
+                </div>
+                <div class="modal-body">
+                    <h5>Waiting for your opponent</h5>
+                </div>
+{#                <div class="modal-footer">#}
+{#                    <button id="submit-modal" type="button" class="btn btn-outline-dark">Create Game</button>#}
+{#                </div>#}
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="leave-dialoge" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Your opponent has left the game</h5>
+                </div>
+                <div class="modal-footer">
+                    <button id="submit-modal" type="button" class="btn btn-outline-dark">Create Game</button>
                 </div>
             </div>
         </div>

@@ -5,15 +5,11 @@ import {rook} from "./pieces/rook.js";
 import {bishop} from "./pieces/bishop.js";
 import {knight} from "./pieces/knight.js";
 import {pawn} from "./pieces/pawn.js";
-
+import {timer} from "./timer.js";
+import {chat} from "./chat.js";
 
 
 export let validation = {
-
-    showTurn : function(){
-        let turn = document.querySelector('#turn');
-        turn.textContent = validation.isYourTurn();
-    },
 
 
     isYourTurn : function(){
@@ -23,7 +19,15 @@ export let validation = {
 
     setTurn : function() {
         let chessboard = document.querySelector('#chessboard');
-        chessboard.dataset.turn = (validation.isYourTurn()) ? 'false' : 'true';
+        if(validation.isYourTurn()){
+            chessboard.dataset.turn = 'false';
+            chat.autoMessage("Opponent's turn");
+            timer.reset();
+        } else {
+            chessboard.dataset.turn = 'true';
+            chat.autoMessage("Your turn");
+            timer.startTimer();
+        }
     },
 
 
