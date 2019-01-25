@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, abort, session, flash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from flask_socketio import SocketIO, emit, join_room, leave_room, send
+from flask_socketio import SocketIO, emit, join_room
 from flask_mail import Mail, Message
 from datetime import timedelta
 from functools import wraps
@@ -17,7 +17,6 @@ mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
 
-# new_game('hello', 10, 'Black', 11)
 # heroku pg:psql --app gopnik-chess < init.sql
 
 
@@ -66,9 +65,14 @@ def join_chess_room():
 
 
 
-# @socketio.on('connection')
-# def connection_handler(msg):
-#     emit('log', msg, broadcast=True)
+# @socketio.on('connect')
+# def connect(data):
+#     emit('connected','connected',broadcast=True)
+#
+#
+# @socketio.on('refresh')
+# def refresh(data):
+#     emit('reload', data, broadcast=True)
 
 
 
@@ -83,6 +87,12 @@ def join(data):
 @socketio.on('send_chat')
 def chat_handler(data):
     emit('chat', data, room=session['room'])
+
+
+
+@socketio.on('exit')
+def chat_handler(data):
+    emit('redirect', data, room=session['room'])
 
 
 
@@ -158,6 +168,7 @@ def sign_in():
 @app.route('/home')
 @login_required
 def home():
+    session['room'] = 'home'
     user_id = session['id']
     rooms = get_rooms_by_user_id(user_id)
     opponents = get_opponents(user_id)

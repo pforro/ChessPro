@@ -1,3 +1,28 @@
+// function initRefreshSocket() {
+//     let socket = io.connect('http://' + document.domain + ':' + location.port,{transports: ['websocket']});
+//     socket.on('connect',function(){
+//         socket.emit('join','join');
+//     });
+//     socket.on('refresh',function(data){
+//         location.reload();
+//     });
+// }
+
+// function initPlayBtns(socket) {
+//     let btns = document.querySelectorAll('.play');
+//     btns.forEach(btn => btn.addEventListener('click',function(){
+//         socket.emit('refresh','refresh');
+//     }))
+// }
+
+
+// function initDeleteBtns(socket) {
+//     let btns = document.querySelectorAll('.play');
+//     btns.forEach(btn => btn.addEventListener('click',function(){
+//         socket.emit('refresh','refresh');
+//     }))
+// }
+
 
 function initNewGameButton(){
     let button = document.querySelector('#newgame');
@@ -31,8 +56,6 @@ function initSubmitModalBtn(){
         $('#newgame-dialog').modal('hide');
     })
 }
-
-
 
 
 

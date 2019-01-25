@@ -26,7 +26,7 @@
 
 
 {% block navigation %}
-    <a href="{{ url_for('home') }}" class="btn btn-outline-danger">Exit Game</a>
+    <a href="{{ url_for('home') }}" class="btn btn-outline-danger exit">Exit Game</a>
 {% endblock %}
 
 
@@ -51,14 +51,11 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">System Message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: red;">System Message</h5>
                 </div>
                 <div class="modal-body">
                     <h5>Waiting for your opponent</h5>
                 </div>
-{#                <div class="modal-footer">#}
-{#                    <button id="submit-modal" type="button" class="btn btn-outline-dark">Create Game</button>#}
-{#                </div>#}
             </div>
         </div>
     </div>
@@ -66,16 +63,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New Game</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: red;">System Message</h5>
                 </div>
                 <div class="modal-body">
                     <h5>Your opponent has left the game</h5>
-                </div>
-                <div class="modal-footer">
-                    <button id="submit-modal" type="button" class="btn btn-outline-dark">Create Game</button>
                 </div>
             </div>
         </div>

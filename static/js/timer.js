@@ -2,15 +2,13 @@ import {webSocket} from "./websocket.js";
 
 class Timer{
     constructor(){
-        //-----------------------------ATTRIBS------------------------------
-        //------------------------------------------------------------------
             this.time = {m:1,s:0};
             this.default = {m:1,s:0};
-            this.hsTime = 6000; //time in miliseconds
+            this.hsTime = 6000;
             this.active = false;
             this.id = null;      
-        //-----------------------------METHODS------------------------------
-        //------------------------------------------------------------------
+
+
             this.tick = ()=>{
                 this.time.s -= 1;
                 if(this.time.s === -1){
@@ -61,9 +59,6 @@ class Timer{
         }
 }
 
-
-//--------------------------------UTIL FUNCTIONS--------------------------------
-//------------------------------------------------------------------------------
 function numFormat(number){
     return (number>9) ? number : "0" + number;
 }

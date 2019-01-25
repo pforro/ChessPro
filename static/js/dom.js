@@ -1,5 +1,4 @@
 import {webSocket} from "./websocket.js";
-import {validation} from "./validation.js";
 
 
 export let dom = {
@@ -79,6 +78,16 @@ export let dom = {
         chessBoardCell.appendChild(img);
         chessBoardCell.dataset.active = true;
     },
+
+    initExitBtn : function () {
+        let btn = document.querySelector('.exit');
+        btn.addEventListener('click',function(){
+            webSocket.sendExit();
+            location.replace('http://' + document.domain + ':' + location.port + '/home');
+        })
+    }
+
+
 };
 
 
