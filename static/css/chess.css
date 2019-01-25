@@ -129,3 +129,26 @@ table {
     font-size: 60px;
     font-weight: bold;
 }
+
+#Black-folks {
+    border: 1px solid black;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    right: 8%;
+    top: 30%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+
+
+#White-folks {
+    border: 1px solid black;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    right: 8%;
+    top: 55%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}

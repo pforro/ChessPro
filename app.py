@@ -125,6 +125,7 @@ def kill_handler(enemyId):
 @app.route('/load_board',methods=['POST'])
 def load_board():
     pieces = get_pieces(request.form['board_name'])
+    print(pieces)
     return jsonify({'pieces':pieces})
 
 

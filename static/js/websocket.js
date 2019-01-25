@@ -25,13 +25,13 @@ export let webSocket = {
 
 
     sendExit : function () {
-        webSocket.socket.emit('exit','exit')
+        webSocket.socket.emit('exit','exit');
     },
 
 
     exitHandler : function () {
         $('#leave-dialoge').modal('show');
-        setTimeout(() => location.replace('http://' + document.domain + ':' + location.port + '/home'),4000)
+        setTimeout(() => location.replace('http://' + document.domain + ':' + location.port + '/home'),4000);
     },
 
 
@@ -69,7 +69,14 @@ export let webSocket = {
 
 
     killHandler : function(enemyId){
-        document.querySelector(`#${enemyId}`).remove();
+        let enemy = document.querySelector(`#${enemyId}`);
+        let enemyColor = enemy.dataset.color;
+        let clone = enemy.cloneNode(true);
+        enemy.remove();
+        clone.style.width = '16%';
+        clone.style.display = 'inline-block';
+        if(validation.getOwnColor() === 'Black') clone.style.transform = 'rotate(360deg)';
+        document.querySelector(`#${enemyColor}-folks`).appendChild(clone);
     },
 
 
@@ -122,7 +129,6 @@ export let webSocket = {
 
     initConnection : function () {
         webSocket.socket.on('joined',function(data) {
-            console.log(`User: ${data} has connected!`);
             chat.autoMessage(`${data} has connected!`);
             webSocket.startGame(data);
         });
