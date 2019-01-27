@@ -11,7 +11,8 @@ export let socketEvents = {
 
     initConnectionEvent : function() {
         socketEvents.socket.on('connect',function(){
-            $('#waiting-dialoge').modal('show');
+            document.querySelector('#modal-message').textContent = 'Waiting for your opponent...';
+            $('#modal-dialoge').modal('show');
             socketEvents.socket.emit('join','join');
         });
     },
@@ -30,7 +31,8 @@ export let socketEvents = {
 
 
     exitHandler : function () {
-        $('#leave-dialoge').modal('show');
+        document.querySelector('#modal-message').textContent = 'Your opponent has left the game...';
+        $('#modal-dialoge').modal('show');
         setTimeout(() => location.replace('http://' + document.domain + ':' + location.port + '/home'),4000);
     },
 
@@ -45,7 +47,7 @@ export let socketEvents = {
     startGameHandler : function(data) {
         dragndrop.initDragndrop();
         setTimeout(()=>{
-            $('#waiting-dialoge').modal('hide');
+            $('#modal-dialoge').modal('hide');
             if(validation.isYourTurn()){
                 timer.startTimer();
             }
