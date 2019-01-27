@@ -1,4 +1,4 @@
-import {socketEvents} from "./socketEvents.js";
+import {socketEvents} from "./socket_events.js";
 
 class Timer{
     constructor(){
@@ -16,7 +16,7 @@ class Timer{
                 this.displayTime();
                 if(this.timeConverter()===0){
                         this.reset();
-                        socketEvents.timeOut();
+                        socketEvents.sendTimeOut();
                 }
             };
 

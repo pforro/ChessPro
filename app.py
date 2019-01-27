@@ -64,7 +64,7 @@ def join_chess_room():
 
 
 
-@socketio.on('join')
+@socketio.on('join_room')
 def join(data):
     join_chess_room()
     username = session['username']
@@ -72,15 +72,15 @@ def join(data):
 
 
 
-@socketio.on('send_chat')
+@socketio.on('send_chat_message')
 def chat_handler(data):
-    emit('chat', data, room=session['room'])
+    emit('chatMessage', data, room=session['room'])
 
 
 
-@socketio.on('exit')
+@socketio.on('send_exit')
 def chat_handler(data):
-    emit('redirect', data, room=session['room'])
+    emit('exit', data, room=session['room'])
 
 
 
@@ -90,7 +90,7 @@ def timeOut_handler(data):
 
 
 
-@socketio.on('start_game')
+@socketio.on('send_start_game')
 def start_game_handler(data):
     emit('startGame', data, room=session['room'])
 

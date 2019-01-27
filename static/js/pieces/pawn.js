@@ -1,4 +1,4 @@
-import {validation} from "../validation.js";
+import {gameControl} from "../game_control.js";
 
 
 export let pawn = {
@@ -7,10 +7,10 @@ export let pawn = {
     mapForwardMoves : function(element, direction, yCor, xCor){
         if (Number(element.dataset.steps) < 1) {
             document.validMoves = document.validMoves
-                .concat(validation.mapValidMoves(yCor, xCor, direction, 0, 3));
+                .concat(gameControl.mapValidMoves(yCor, xCor, direction, 0, 3));
         } else {
             document.validMoves = document.validMoves
-                .concat(validation.mapValidMoves(yCor, xCor, direction, 0, 2));
+                .concat(gameControl.mapValidMoves(yCor, xCor, direction, 0, 2));
         }
     },
 
@@ -29,7 +29,7 @@ export let pawn = {
 
 
     isValidDiagonal : function (cell) {
-        let color = validation.getOwnColor();
+        let color = gameControl.getOwnColor();
         return  cell && cell.dataset.active === 'true' &&
                 cell.firstElementChild.dataset.color !== color &&
                 cell.firstElementChild.dataset.type !== 'King';

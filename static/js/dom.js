@@ -1,4 +1,4 @@
-import {socketEvents} from "./socketEvents.js";
+import {socketEvents} from "./socket_events.js";
 
 
 export let dom = {

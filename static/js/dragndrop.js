@@ -1,5 +1,5 @@
-import {validation} from "./validation.js";
-import {socketEvents} from "./socketEvents.js";
+import {gameControl} from "./game_control.js";
+import {socketEvents} from "./socket_events.js";
 import {dom} from "./dom.js"
 
 
@@ -17,11 +17,11 @@ export let dragndrop = {
 
     dragHandler : function(drake) {
         drake.on('drag', function(element){
-            if (validation.isYourTurn()){
-                if (element.dataset.color !== validation.getOwnColor()) {
+            if (gameControl.isYourTurn()){
+                if (element.dataset.color !== gameControl.getOwnColor()) {
                     drake.cancel();
                 } else {
-                    validation.moveValidation(element);
+                    gameControl.moveValidation(element);
                     dom.highlight();
                 }
             } else {
@@ -33,11 +33,11 @@ export let dragndrop = {
 
     dropHandler : function(drake) {
         drake.on('drop', function(element,target,source){
-            if (validation.isYourTurn()){
+            if (gameControl.isYourTurn()){
                 if (!document.validMoves.includes(target)) {
                     drake.cancel(true);
                 } else {
-                    validation.kill(target);
+                    gameControl.kill(target);
                     socketEvents.sendMove(element, source, target);
                     dom.revertHighlight();
                 }
@@ -48,7 +48,7 @@ export let dragndrop = {
 
     cancelHandler : function(drake) {
         drake.on('cancel', function(element){
-            if (element.dataset.color === validation.getOwnColor() && validation.isYourTurn()) {
+            if (element.dataset.color === gameControl.getOwnColor() && gameControl.isYourTurn()) {
                 dom.revertHighlight();
             }
         });

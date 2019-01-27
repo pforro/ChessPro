@@ -1,4 +1,4 @@
-import {validation} from "../validation.js";
+import {gameControl} from "../game_control.js";
 
 
 export let king = {
@@ -13,7 +13,7 @@ export let king = {
         document.validMoves = [];
         for(let step of king.steps) {
             document.validMoves = document.validMoves
-                .concat(validation.mapValidMoves(yCor, xCor, step[0], step[1], step[2]));
+                .concat(gameControl.mapValidMoves(yCor, xCor, step[0], step[1], step[2]));
         }
     }
 };

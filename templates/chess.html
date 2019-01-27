@@ -42,7 +42,7 @@
                     <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
                 </div>
                 <div class="col-sm">
-                    <div id="chessboard" class="container" data-nickname="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}" data-players="0"></div>
+                    <div id="chessboard" class="container" data-username="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}" data-players="0"></div>
                 </div>
             </div>
         </div>

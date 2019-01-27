@@ -1,4 +1,5 @@
-import {socketEvents} from "./socketEvents.js";
+import {socketEvents} from "./socket_events.js";
+import {util} from "./utility.js";
 import {queen} from "./pieces/queen.js";
 import {king} from "./pieces/king.js";
 import {rook} from "./pieces/rook.js";
@@ -9,7 +10,7 @@ import {timer} from "./timer.js";
 import {chat} from "./chat.js";
 
 
-export let validation = {
+export let gameControl = {
 
 
     isYourTurn : function(){
@@ -17,9 +18,10 @@ export let validation = {
     },
 
 
+
     setTurn : function() {
         let chessboard = document.querySelector('#chessboard');
-        if(validation.isYourTurn()){
+        if(gameControl.isYourTurn()){
             chessboard.dataset.turn = 'false';
             chat.autoMessage("Opponent's turn");
             timer.reset();
@@ -31,9 +33,11 @@ export let validation = {
     },
 
 
+
     getOwnColor : function() {
        return document.querySelector('#chessboard').dataset.color;
     },
+
 
 
     isObstacleAhead : function(cell,step,color) {
@@ -43,10 +47,12 @@ export let validation = {
     },
 
 
+
     isEnemyAhead : function(cell,color){
         let enemy = cell.firstElementChild;
         return enemy && enemy.dataset.color !== color;
     },
+
 
 
     getCell : function (yCor, xCor) {
@@ -54,15 +60,16 @@ export let validation = {
     },
 
 
+
     mapValidMoves : function (yCor, xCor, yIncr, xIncr, maxStep) {
         let validMoves = [];
-        let color = validation.getOwnColor();
+        let color = gameControl.getOwnColor();
         let step = 1;
         while (step <= maxStep) {
-            let cell = validation.getCell(yCor,xCor);
-            if(cell && !validation.isObstacleAhead(cell,step,color)){
+            let cell = gameControl.getCell(yCor,xCor);
+            if(cell && !gameControl.isObstacleAhead(cell,step,color)){
                 validMoves.push(cell);
-                if(validation.isEnemyAhead(cell,color)) break;
+                if(gameControl.isEnemyAhead(cell,color)) break;
                 yCor += yIncr; xCor += xIncr; ++step;
             } else {
                 break;
@@ -72,14 +79,16 @@ export let validation = {
     },
 
 
+
     kill : function(target){
-        let color = validation.getOwnColor();
+        let color = gameControl.getOwnColor();
         let enemyColor = (color === 'White') ? 'Black' : 'White';
         let enemy = target.querySelector(`.${enemyColor}`);
         if(enemy){
             socketEvents.sendKill(enemy.id);
         }
     },
+
 
 
     moveValidation : function (element) {

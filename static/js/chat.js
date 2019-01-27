@@ -1,11 +1,11 @@
-import {socketEvents} from "./socketEvents.js";
+import {socketEvents} from "./socket_events.js";
 
 
 export let chat = {
 
     input :  document.querySelector('#chat-input'),
 
-    usrname : document.querySelector('#chessboard').dataset.nickname,
+    usrname : document.querySelector('#chessboard').dataset.username,
 
     submitBtn : document.querySelector('#submit-btn'),
 
@@ -16,7 +16,7 @@ export let chat = {
 
     sendChatMessage : function() {
         if(chat.input.value) {
-            socketEvents.sendChat(chat.input.value, chat.usrname);
+            socketEvents.sendChatMessage(chat.input.value, chat.usrname);
             chat.input.value = "";
         }
     },
