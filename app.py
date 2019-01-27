@@ -17,7 +17,6 @@ mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
 
 
-# heroku pg:psql --app gopnik-chess < init.sql
 
 
 def login_required(function):
@@ -62,17 +61,6 @@ def join_chess_room():
     room = session['board_name']
     session['room'] = room
     join_room(room)
-
-
-
-# @socketio.on('connect')
-# def connect(data):
-#     emit('connected','connected',broadcast=True)
-#
-#
-# @socketio.on('refresh')
-# def refresh(data):
-#     emit('reload', data, broadcast=True)
 
 
 
@@ -125,7 +113,6 @@ def kill_handler(enemyId):
 @app.route('/load_board',methods=['POST'])
 def load_board():
     pieces = get_pieces(request.form['board_name'])
-    print(pieces)
     return jsonify({'pieces':pieces})
 
 
@@ -176,6 +163,7 @@ def home():
     return render_template('home.html',
                            rooms = rooms,
                            opponents = opponents)
+
 
 
 @app.route('/logout')

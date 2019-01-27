@@ -27,7 +27,30 @@
                 {% block navigation %}{% endblock %}
             </div>
         </nav>
+
+        {#-------------------------------------CONTENT--------------------------------------#}
+        {#----------------------------------------------------------------------------------#}
         {% block content %}{% endblock %}
+
+        {#--------------------------------------MODAL---------------------------------------#}
+        {#----------------------------------------------------------------------------------#}
         {% block modal %}{% endblock %}
+
+        {#--------------------------------------FOOTER--------------------------------------#}
+        {#----------------------------------------------------------------------------------#}
+        <nav class="navbar fixed-bottom row">
+            <div class="col">
+                <small>Created By: Krisztian Kaszas & Peter Cs. Forro - 2019 Budapest</small>
+            </div>
+            <div class="col text-right">
+                <a href="https://github.com/peterforro/chessPro">
+                    <img src="{{ url_for('static',filename='icons/github.png') }}" width="30px">
+                </a>
+                <img src="{{ url_for('static',filename='icons/linkedin.png') }}" width="30px">
+                <img src="{{ url_for('static',filename='icons/twitter.png') }}" width="30px">
+                <img src="{{ url_for('static',filename='icons/facebook.png') }}" width="30px">
+                <img src="{{ url_for('static',filename='icons/instagram.png') }}" width="30px">
+            </div>
+        </nav>
     </body>
 </html>

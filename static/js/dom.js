@@ -1,4 +1,4 @@
-import {webSocket} from "./websocket.js";
+import {socketEvents} from "./socketEvents.js";
 
 
 export let dom = {
@@ -33,7 +33,9 @@ export let dom = {
 
 
     highlight : function() {
-        document.validMoves.forEach(cell => cell.style.backgroundImage = `url("/static/pics/highlight.jpg")` );
+        document.validMoves.forEach(function (cell) {
+            cell.style.backgroundImage = `url("/static/pics/highlight.jpg")`;
+        });
     },
 
 
@@ -46,7 +48,8 @@ export let dom = {
         let chessBoard = document.querySelector('#chessboard');
         if(chessBoard.dataset.color === 'Black'){
             chessBoard.style.transform = 'rotate(180deg)';
-            document.querySelectorAll('.piece').forEach(piece => piece.style.transform='rotate(180deg)');
+            document.querySelectorAll('.piece')
+                .forEach(piece => piece.style.transform='rotate(180deg)');
         }
     },
 
@@ -112,13 +115,12 @@ export let dom = {
     initExitBtn : function () {
         let btn = document.querySelector('.exit');
         btn.addEventListener('click',function(){
-            webSocket.sendExit();
+            socketEvents.sendExit();
             location.replace('http://' + document.domain + ':' + location.port + '/home');
         })
     }
 
 
 };
-
 
 

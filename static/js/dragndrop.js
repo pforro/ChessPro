@@ -1,5 +1,5 @@
 import {validation} from "./validation.js";
-import {webSocket} from "./websocket.js";
+import {socketEvents} from "./socketEvents.js";
 import {dom} from "./dom.js"
 
 
@@ -38,7 +38,7 @@ export let dragndrop = {
                     drake.cancel(true);
                 } else {
                     validation.kill(target);
-                    webSocket.sendMove(element, source, target);
+                    socketEvents.sendMove(element, source, target);
                     dom.revertHighlight();
                 }
             }

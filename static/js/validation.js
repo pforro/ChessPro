@@ -1,4 +1,4 @@
-import {webSocket} from "./websocket.js";
+import {socketEvents} from "./socketEvents.js";
 import {queen} from "./pieces/queen.js";
 import {king} from "./pieces/king.js";
 import {rook} from "./pieces/rook.js";
@@ -77,7 +77,7 @@ export let validation = {
         let enemyColor = (color === 'White') ? 'Black' : 'White';
         let enemy = target.querySelector(`.${enemyColor}`);
         if(enemy){
-            webSocket.sendKill(enemy.id);
+            socketEvents.sendKill(enemy.id);
         }
     },
 

@@ -1,4 +1,4 @@
-import {webSocket} from "./websocket.js";
+import {socketEvents} from "./socketEvents.js";
 
 
 export let chat = {
@@ -16,7 +16,7 @@ export let chat = {
 
     sendChatMessage : function() {
         if(chat.input.value) {
-            webSocket.sendChat(chat.input.value, chat.usrname);
+            socketEvents.sendChat(chat.input.value, chat.usrname);
             chat.input.value = "";
         }
     },

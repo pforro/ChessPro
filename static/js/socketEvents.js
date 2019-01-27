@@ -4,15 +4,15 @@ import {dragndrop} from "./dragndrop.js";
 import {timer} from "./timer.js";
 
 
-export let webSocket = {
+export let socketEvents = {
 
     socket : io.connect('http://' + document.domain + ':' + location.port,{transports: ['websocket']}),
 
 
     initConnectionEvent : function() {
-        webSocket.socket.on('connect',function(){
+        socketEvents.socket.on('connect',function(){
             $('#waiting-dialoge').modal('show');
-            webSocket.socket.emit('join','join');
+            socketEvents.socket.emit('join','join');
         });
     },
 
@@ -20,12 +20,12 @@ export let webSocket = {
     sendMove : function(element, source, target){
         let newCors = {yCor: target.dataset.ycor, xCor: target.dataset.xcor};
         let moveData = {element:element.id,source:source.id,target:target.id, newCors};
-        webSocket.socket.emit('send_move',moveData);
+        socketEvents.socket.emit('send_move',moveData);
     },
 
 
     sendExit : function () {
-        webSocket.socket.emit('exit','exit');
+        socketEvents.socket.emit('exit','exit');
     },
 
 
@@ -38,7 +38,7 @@ export let webSocket = {
 
     startGame : function(data){
         let username = document.querySelector('#chessboard').dataset.nickname;
-        if(username !== data) webSocket.socket.emit('start_game','startgame');
+        if(username !== data) socketEvents.socket.emit('start_game','startgame');
     },
 
 
@@ -54,17 +54,17 @@ export let webSocket = {
 
     sendChat : function(input,usrname){
         let data = {message:input,username:usrname};
-        webSocket.socket.emit('send_chat',data);
+        socketEvents.socket.emit('send_chat',data);
     },
 
 
     timeOut : function(){
-        webSocket.socket.emit('time_out','timeout');
+        socketEvents.socket.emit('time_out','timeout');
     },
 
 
     sendKill :function(enemyId){
-        webSocket.socket.emit('send_kill', enemyId);
+        socketEvents.socket.emit('send_kill', enemyId);
     },
 
 
@@ -99,50 +99,50 @@ export let webSocket = {
     },
 
 
-
     initTimeout : function() {
-        webSocket.socket.on('timeOut',function(data) {
-            webSocket.timeOutHandler(data);
+        socketEvents.socket.on('timeOut',function(data) {
+            socketEvents.timeOutHandler(data);
         });
     },
 
 
     initStartGame : function() {
-        webSocket.socket.on('startGame',function(data) {
-            webSocket.startGameHandler(data);
+        socketEvents.socket.on('startGame',function(data) {
+            socketEvents.startGameHandler(data);
         });
     },
 
 
     initMoveEvent : function () {
-        webSocket.socket.on('move',function(moveData) {
-            webSocket.moveHandler(moveData);
+        socketEvents.socket.on('move',function(moveData) {
+            socketEvents.moveHandler(moveData);
         });
     },
 
 
     initExit : function () {
-        webSocket.socket.on('redirect', function (data) {
-            webSocket.exitHandler();
+        socketEvents.socket.on('redirect', function (data) {
+            socketEvents.exitHandler();
         })
     },
 
     initConnection : function () {
-        webSocket.socket.on('joined',function(data) {
+        socketEvents.socket.on('joined',function(data) {
             chat.autoMessage(`${data} has connected!`);
-            webSocket.startGame(data);
+            socketEvents.startGame(data);
         });
     },
 
 
     initKillEvent : function () {
-        webSocket.socket.on('kill',function(enemyId) {
-            webSocket.killHandler(enemyId);
+        socketEvents.socket.on('kill',function(enemyId) {
+            socketEvents.killHandler(enemyId);
         });
     },
 
+
     initChatEvent : function() {
-        webSocket.socket.on('chat',function(data){
+        socketEvents.socket.on('chat',function(data){
             let chat = document.querySelector('#chat');
             chat.innerHTML += `<p><b>${data.username}:</b> ${data.message}</p>`;
             chat.scrollTop = chat.scrollHeight;
@@ -150,16 +150,15 @@ export let webSocket = {
     },
 
 
-
     initWebSocket : function(){
-        webSocket.initConnectionEvent();
-        webSocket.initConnection();
-        webSocket.initMoveEvent();
-        webSocket.initKillEvent();
-        webSocket.initChatEvent();
-        webSocket.initTimeout();
-        webSocket.initStartGame();
-        webSocket.initExit();
+        socketEvents.initConnectionEvent();
+        socketEvents.initConnection();
+        socketEvents.initMoveEvent();
+        socketEvents.initKillEvent();
+        socketEvents.initChatEvent();
+        socketEvents.initTimeout();
+        socketEvents.initStartGame();
+        socketEvents.initExit();
     },
 };
 

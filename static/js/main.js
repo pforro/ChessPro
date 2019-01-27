@@ -1,10 +1,10 @@
 import {dom} from "./dom.js";
-import {webSocket} from "./websocket.js";
+import {socketEvents} from "./socketEvents.js";
 import {chat} from "./chat.js";
 
 
 function main(){
-    webSocket.initWebSocket();
+    socketEvents.initWebSocket();
     dom.buildChessBoard();
     dom.loadPieces();
     chat.initSubmitChat();
