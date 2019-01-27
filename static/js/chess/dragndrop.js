@@ -15,6 +15,7 @@ export let dragndrop = {
     },
 
 
+
     dragHandler : function(drake) {
         drake.on('drag', function(element){
             if (gameControl.isYourTurn()){
@@ -31,6 +32,7 @@ export let dragndrop = {
     },
 
 
+
     dropHandler : function(drake) {
         drake.on('drop', function(element,target,source){
             if (gameControl.isYourTurn()){
@@ -44,6 +46,7 @@ export let dragndrop = {
             }
         });
     },
+
 
 
     cancelHandler : function(drake) {

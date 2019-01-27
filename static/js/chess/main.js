@@ -5,10 +5,8 @@ import {chat} from "./chat.js";
 
 function main(){
     socketEvents.initSocketEvents();
-    dom.buildChessBoard();
-    dom.loadPieces();
+    dom.initDom();
     chat.initSubmitChat();
-    dom.initExitBtn();
 }
 
 

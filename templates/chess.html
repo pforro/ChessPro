@@ -16,7 +16,7 @@
 
 
 {% block script %}
-    <script type="module" src="{{ url_for('static',filename='js/main.js') }}"></script>
+    <script type="module" src="{{ url_for('static',filename='js/chess/main.js') }}"></script>
 {% endblock script %}
 
 
@@ -39,7 +39,7 @@
                     <div id="time"></div>
                     <div data-spy="scroll" data-offset="0" id="chat"></div>
                     <input type="text" id="chat-input"><br>
-                    <button id="submit-btn" type="button" class="btn btn-outline-secondary">Send message</button>
+                    <button id="submit-btn" type="button" class="btn btn-outline-dark">Send message</button>
                 </div>
                 <div class="col-sm">
                     <div id="chessboard" class="container" data-username="{{ session.get('username') }}" data-color="{{ color }}" data-turn={{ init_turn() }} data-boardname="{{ board_name }}" data-players="0"></div>

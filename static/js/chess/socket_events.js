@@ -1,13 +1,14 @@
+import {dom} from "./dom.js"
 import {gameControl} from "./game_control.js";
 import {chat} from "./chat.js";
 import {dragndrop} from "./dragndrop.js";
 import {timer} from "./timer.js";
-import {util} from "./utility.js";
 
 
 export let socketEvents = {
 
-    socket : io.connect(util.baseURL,{transports:['websocket']}),
+
+    socket : io.connect('http://'+document.domain+':'+location.port,{transports:['websocket']}),
 
 
     sendMove : function(element, source, target){
@@ -105,7 +106,7 @@ export let socketEvents = {
                 .textContent = 'Your opponent has left the game...';
             $('#modal-dialoge').modal('show');
             timer.stop();
-            setTimeout(()=>location.replace(util.baseURL+'/home'),3000);
+            setTimeout(()=>location.replace(dom.baseURL+'/home'),3000);
         })
     },
 

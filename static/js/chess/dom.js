@@ -1,7 +1,10 @@
 import {socketEvents} from "./socket_events.js";
+import {gameControl} from "./game_control.js";
 
 
 export let dom = {
+
+    baseURL : 'http://'+document.domain+':'+location.port,
 
 
     createChessBoardCell : function(cellId, yCor, xCor){
@@ -14,6 +17,7 @@ export let dom = {
         cell.style.backgroundColor = ((xCor+yCor)% 2 === 0 ) ? '#606060' : 'lightgrey';
         return cell
     },
+
 
 
     buildChessBoard : function(){
@@ -32,6 +36,7 @@ export let dom = {
     },
 
 
+
     highlight : function() {
         document.validMoves.forEach(function (cell) {
             cell.style.backgroundImage = `url("/static/pics/highlight.jpg")`;
@@ -39,9 +44,11 @@ export let dom = {
     },
 
 
+
     revertHighlight : function() {
         document.validMoves.forEach(cell => cell.style.backgroundImage = `none`);
     },
+
 
 
     rotateBoard : function(){
@@ -54,6 +61,7 @@ export let dom = {
     },
 
 
+
     rotateDeads : function(){
         if(document.querySelector('#chessboard').dataset.color === 'Black'){
             let pieces = document.querySelectorAll('.deads .piece');
@@ -64,11 +72,12 @@ export let dom = {
     },
 
 
+
     loadPieces: function(){
         let formData = new FormData();
         let boardName = document.querySelector('#chessboard').dataset.boardname;
         formData.append('board_name',boardName);
-        let baseURL = 'http://' + document.domain + ':' + location.port + '/load_board';
+        let baseURL = dom.baseURL + '/load_board';
         fetch(baseURL,{method:'POST',body:formData})
             .then(response => response.json())
             .then(data => {
@@ -98,6 +107,7 @@ export let dom = {
     },
 
 
+
     purgatory : function (piece) {
         let img = document.createElement('img');
         img.setAttribute('src',`/static/pics/${piece.color}${piece.type}.png`);
@@ -116,10 +126,25 @@ export let dom = {
         let btn = document.querySelector('.exit');
         btn.addEventListener('click',function(){
             socketEvents.sendExit();
-            location.replace('http://' + document.domain + ':' + location.port + '/home');
+            location.replace(dom.baseURL + '/home');
         })
-    }
+    },
 
+
+
+    setBackground : function() {
+        let body = document.querySelector('body');
+        body.style.backgroundColor = (gameControl.isYourTurn()) ? 'lightgrey' : '#6D6D6D';
+    },
+
+
+
+    initDom : function() {
+        dom.buildChessBoard();
+        dom.loadPieces();
+        dom.initExitBtn();
+        dom.setBackground();
+    },
 
 };
 

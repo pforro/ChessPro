@@ -22,12 +22,14 @@ export let chat = {
     },
 
 
+
     initSubmitChat : function() {
         chat.submitBtn.addEventListener('click',chat.sendChatMessage);
         chat.body.addEventListener('keydown',function(event){
             if (event.key === 'Enter') chat.sendChatMessage();
         });
     },
+
 
 
     autoMessage : function(message) {

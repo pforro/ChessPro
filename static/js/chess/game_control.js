@@ -1,5 +1,4 @@
 import {socketEvents} from "./socket_events.js";
-import {util} from "./utility.js";
 import {queen} from "./pieces/queen.js";
 import {king} from "./pieces/king.js";
 import {rook} from "./pieces/rook.js";
@@ -8,6 +7,7 @@ import {knight} from "./pieces/knight.js";
 import {pawn} from "./pieces/pawn.js";
 import {timer} from "./timer.js";
 import {chat} from "./chat.js";
+import {dom} from "./dom.js";
 
 
 export let gameControl = {
@@ -30,6 +30,7 @@ export let gameControl = {
             chat.autoMessage("Your turn");
             timer.startTimer();
         }
+        dom.setBackground();
     },
 
 
