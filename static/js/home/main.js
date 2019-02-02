@@ -1,7 +1,6 @@
 import {home} from "./home.js";
 
 
-
 function main(){
     home.initSocketEvents();
     home.initNewGameButton();

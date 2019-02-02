@@ -7,7 +7,7 @@ export let dom = {
     baseURL : 'http://'+document.domain+':'+location.port,
 
 
-    createChessBoardCell : function(cellId, yCor, xCor){
+    createChessBoardCell : function(cellId, yCor, xCor) {
         let cell = document.createElement('div');
         cell.className = 'cell col container';
         cell.id = 'cell' + cellId;
@@ -19,8 +19,7 @@ export let dom = {
     },
 
 
-
-    buildChessBoard : function(){
+    buildChessBoard : function() {
         let chessboard = document.querySelector('#chessboard');
         let cellId = 0;
         for(let yCor=0;yCor<8;++yCor){
@@ -36,7 +35,6 @@ export let dom = {
     },
 
 
-
     highlight : function() {
         document.validMoves.forEach(function (cell) {
             cell.style.backgroundImage = `url("/static/pics/highlight.jpg")`;
@@ -44,14 +42,12 @@ export let dom = {
     },
 
 
-
     revertHighlight : function() {
         document.validMoves.forEach(cell => cell.style.backgroundImage = `none`);
     },
 
 
-
-    rotateBoard : function(){
+    rotateBoard : function() {
         let chessBoard = document.querySelector('#chessboard');
         if(chessBoard.dataset.color === 'Black'){
             chessBoard.style.transform = 'rotate(180deg)';
@@ -61,8 +57,7 @@ export let dom = {
     },
 
 
-
-    rotateDeads : function(){
+    rotateDeads : function() {
         if(document.querySelector('#chessboard').dataset.color === 'Black'){
             let pieces = document.querySelectorAll('.deads .piece');
             for(let piece of pieces){
@@ -72,8 +67,7 @@ export let dom = {
     },
 
 
-
-    loadPieces: function(){
+    loadPieces: function() {
         let formData = new FormData();
         let boardName = document.querySelector('#chessboard').dataset.boardname;
         formData.append('board_name',boardName);
@@ -81,7 +75,6 @@ export let dom = {
         fetch(baseURL,{method:'POST',body:formData})
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 data.pieces.forEach(piece => dom.createPiece(piece));
                 dom.rotateBoard();
                 dom.rotateDeads();
@@ -107,7 +100,6 @@ export let dom = {
     },
 
 
-
     purgatory : function (piece) {
         let img = document.createElement('img');
         img.setAttribute('src',`/static/pics/${piece.color}${piece.type}.png`);
@@ -122,14 +114,9 @@ export let dom = {
 
 
 
-    initExitBtn : function () {
-        let btn = document.querySelector('.exit');
-        btn.addEventListener('click',function(){
-            socketEvents.sendExit();
-            location.replace(dom.baseURL + '/home');
-        })
+    initLeaveGame : function () {
+        window.addEventListener('unload',socketEvents.sendExit)
     },
-
 
 
     setBackground : function() {
@@ -138,12 +125,11 @@ export let dom = {
     },
 
 
-
     initDom : function() {
         dom.buildChessBoard();
         dom.loadPieces();
-        dom.initExitBtn();
         dom.setBackground();
+        dom.initLeaveGame();
     },
 
 };
