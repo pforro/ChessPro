@@ -2,20 +2,20 @@ export let home = {
 
     baseURL : 'http://' + document.domain + ':' + location.port,
 
-    socket : io.connect('http://'+document.domain+':'+location.port,{transports:['websocket']}),
+    socket : io.connect('http://' + document.domain + ':' + location.port,{transports:['websocket']}),
 
 
     connectToServer : function() {
         home.socket.on('connect',function(){
             home.socket.emit('join_room','join');
         });
-        home.socket.on('joined',function(data) {
+        home.socket.on('joined',function() {
             console.log('joined to room: home!');
         });
     },
 
 
-    refreshOnNewGame : function () {
+    refreshOnEvent : function () {
         home.socket.on('refreshHome',function(){
             location.reload();
         })
@@ -24,7 +24,7 @@ export let home = {
 
     initSocketEvents : function() {
         home.connectToServer();
-        home.refreshOnNewGame();
+        home.refreshOnEvent();
     },
 
 
@@ -36,11 +36,21 @@ export let home = {
     },
 
 
+    initDeleteGameButton : function() {
+        let btns = document.querySelectorAll('.delete');
+        for(let btn of btns){
+            btn.addEventListener('click',function(){
+                home.socket.emit('refresh_home','refresh');
+            })
+        }
+    },
+
+
     sendNewGameData : function(formData) {
         let options = {method:'POST',body:formData};
         fetch(home.baseURL + '/newgame',options)
             .then(response => response.json())
-            .then(() => home.socket.emit('refresh_home','refresh_home'));
+            .then(() => home.socket.emit('refresh_home','refresh'));
     },
 
 

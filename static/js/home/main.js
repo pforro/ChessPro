@@ -7,6 +7,7 @@ function main(){
     home.initNewGameButton();
     home.initSubmitModalBtn();
     home.loadGamesOnStartup();
+    home.initDeleteGameButton();
 }
 
 
