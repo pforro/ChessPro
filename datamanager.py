@@ -96,7 +96,6 @@ def create_room(cursor,board_name):
 
 
 
-
 @connection_handler
 def new_game(cursor,board_name,usr_id1,color,usr_id2):
     room_id = create_room(board_name)
@@ -148,6 +147,7 @@ def get_color(cursor,board_name,user_id):
     return cursor.fetchone()['color']
 
 
+
 @connection_handler
 def update_moves(cursor, board_name, movedata):
     query = ''' UPDATE {}
@@ -163,6 +163,7 @@ def update_moves(cursor, board_name, movedata):
     cursor.execute(query, params)
 
 
+
 @connection_handler
 def update_kill(cursor, board_name, id):
     query = ''' UPDATE {}
@@ -171,6 +172,7 @@ def update_kill(cursor, board_name, id):
     query = sql.SQL(query).format(sql.Identifier(board_name))
     params = {'id': id}
     cursor.execute(query, params)
+
 
 
 @connection_handler

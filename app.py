@@ -9,13 +9,13 @@ from forms import *
 from hash import *
 
 
+
 app = Flask(__name__)
 app.secret_key = "ThisIsAVerySecretKey"
 socketio = SocketIO(app)
 app.config.from_pyfile('config.cfg')
 mail = Mail(app)
 s = URLSafeTimedSerializer('VerySecretKey')
-
 
 
 
@@ -96,6 +96,12 @@ def start_game_handler(data):
 
 
 
+@socketio.on('refresh_home')
+def refresh_home(data):
+    emit('refreshHome', data, room=session['room'])
+
+
+
 @socketio.on('send_move')
 def move_handler(move_data):
     update_moves(session['board_name'], move_data)
@@ -156,13 +162,21 @@ def sign_in():
 @app.route('/home')
 @login_required
 def home():
-    session['room'] = 'home'
+    session['board_name'] = 'home'
     user_id = session['id']
     rooms = get_rooms_by_user_id(user_id)
     opponents = get_opponents(user_id)
     return render_template('home.html',
                            rooms = rooms,
                            opponents = opponents)
+
+
+
+@app.route('/rooms',methods=['GET'])
+@login_required
+def rooms():
+    rooms = get_rooms_by_user_id(session['id'])
+    return jsonify(rooms)
 
 
 

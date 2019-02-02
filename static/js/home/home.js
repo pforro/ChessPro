@@ -1,5 +1,33 @@
 export let home = {
 
+    baseURL : 'http://' + document.domain + ':' + location.port,
+
+    socket : io.connect('http://'+document.domain+':'+location.port,{transports:['websocket']}),
+
+
+    connectToServer : function() {
+        home.socket.on('connect',function(){
+            home.socket.emit('join_room','join');
+        });
+        home.socket.on('joined',function(data) {
+            console.log('joined to room: home!');
+        });
+    },
+
+
+    refreshOnNewGame : function () {
+        home.socket.on('refreshHome',function(){
+            location.reload();
+        })
+    },
+
+
+    initSocketEvents : function() {
+        home.connectToServer();
+        home.refreshOnNewGame();
+    },
+
+
     initNewGameButton : function() {
         let button = document.querySelector('#newgame');
         button.addEventListener('click',function(){
@@ -8,14 +36,12 @@ export let home = {
     },
 
 
-
     sendNewGameData : function(formData) {
         let options = {method:'POST',body:formData};
-        fetch('http://' + document.domain + ':' + location.port + '/newgame',options)
+        fetch(home.baseURL + '/newgame',options)
             .then(response => response.json())
-            .then(()=> location.reload());
+            .then(() => home.socket.emit('refresh_home','refresh_home'));
     },
-
 
 
     initSubmitModalBtn : function() {
@@ -31,7 +57,13 @@ export let home = {
             home.sendNewGameData(formData);
             $('#newgame-dialog').modal('hide');
         })
+    },
+
+
+    loadGamesOnStartup : function () {
+        let options = {method:'GET'};
+        fetch(home.baseURL + '/rooms',options)
+            .then(response => response.json())
+            .then(data => console.log(data))
     }
-
-
 };
