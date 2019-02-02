@@ -57,7 +57,7 @@
                                         <td>{{ room.owners }}</td>
                                         <td>
                                             <a class="btn btn-success btn-sm play" href="{{ url_for('game',board_name=room.board_name)}}">Play</a>
-                                            <a class="btn btn-danger btn-sm delete" href="{{ url_for('delete_room',board_name=room.board_name, room_id=room.id) }}">Delete</a>
+                                            <button class="btn btn-danger btn-sm delete" data-url="{{ url_for('delete_room',board_name=room.board_name, room_id=room.id) }}">Delete</button>
                                         </td>
                                     </tr>
                                 {% endfor %}

@@ -22,7 +22,6 @@ export let chat = {
     },
 
 
-
     initSubmitChat : function() {
         chat.submitBtn.addEventListener('click',chat.sendChatMessage);
         chat.body.addEventListener('keydown',function(event){
@@ -31,11 +30,8 @@ export let chat = {
     },
 
 
-
     autoMessage : function(message) {
         chat.chat.innerHTML += `<p><i style="color:#00B446;">System: ${message}</i></p>`;
         chat.chat.scrollTop = chat.chat.scrollHeight;
     }
-
-
 };

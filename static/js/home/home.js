@@ -40,7 +40,9 @@ export let home = {
         let btns = document.querySelectorAll('.delete');
         for(let btn of btns){
             btn.addEventListener('click',function(){
-                home.socket.emit('refresh_home','refresh');
+                fetch(btn.dataset.url,{method:'GET'})
+                    // .then(response => response.json())
+                    .then(() => home.socket.emit('refresh_home','refresh'));
             })
         }
     },
