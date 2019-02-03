@@ -16,8 +16,10 @@ export let home = {
 
 
     refreshOnEvent : function () {
-        home.socket.on('refreshHome',function(){
-            location.reload();
+        home.socket.on('refreshGames',function(){
+            let tbody = document.querySelector('tbody');
+            if(tbody) tbody.remove();
+            home.loadGames();
         })
     },
 
@@ -36,13 +38,22 @@ export let home = {
     },
 
 
-    initDeleteGameButton : function() {
+    initDeleteGameButtons : function() {
         let btns = document.querySelectorAll('.delete');
         for(let btn of btns){
             btn.addEventListener('click',function(){
                 fetch(btn.dataset.url,{method:'GET'})
-                    // .then(response => response.json())
-                    .then(() => home.socket.emit('refresh_home','refresh'));
+                    .then(() => home.socket.emit('refresh_games','refresh'));
+            })
+        }
+    },
+
+
+    initPlayGameButtons : function() {
+        let btns = document.querySelectorAll('.play');
+        for(let btn of btns){
+            btn.addEventListener('click',function(){
+                location.replace(btn.dataset.url);
             })
         }
     },
@@ -52,7 +63,7 @@ export let home = {
         let options = {method:'POST',body:formData};
         fetch(home.baseURL + '/newgame',options)
             .then(response => response.json())
-            .then(() => home.socket.emit('refresh_home','refresh'));
+            .then(() => home.socket.emit('refresh_games','refresh'));
     },
 
 
@@ -72,10 +83,50 @@ export let home = {
     },
 
 
-    loadGamesOnStartup : function () {
+    loadGames : function () {
         let options = {method:'GET'};
         fetch(home.baseURL + '/rooms',options)
             .then(response => response.json())
-            .then(data => console.log(data))
-    }
+            .then(rooms => {
+                home.buildGamesTable(rooms);
+                home.initPlayGameButtons();
+                home.initDeleteGameButtons();
+            });
+    },
+
+
+    buildGamesTable : function (rooms) {
+        let tbody = document.createElement('tbody');
+        document.querySelector('table').appendChild(tbody);
+        let headers = ['board_name','owners'];
+        for(let room of rooms){
+            let tr = document.createElement('tr');
+            for(let header of headers){
+                let td = document.createElement('td');
+                td.textContent = room[header];
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+            home.createActionButtons(room);
+        }
+    },
+
+
+    createActionButtons : function (room) {
+        let td = document.createElement('td');
+        let play = document.createElement('button');
+        play.className = 'btn btn-success btn-sm play';
+        play.dataset.url = home.baseURL + '/game/' + room.board_name;
+        play.textContent = 'Play';
+        let del = document.createElement('button');
+        del.className = "btn btn-danger btn-sm delete";
+        del.dataset.url = home.baseURL + '/delete-room/' + room.board_name + '/' + room.id;
+        del.textContent = 'Delete';
+        td.appendChild(play);
+        td.appendChild(del);
+        let tr = document.querySelector('tbody').lastElementChild;
+        tr.appendChild(td);
+    },
+
+
 };

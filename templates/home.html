@@ -32,7 +32,7 @@
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
-                                <div class="{{ category }}">
+                                <div class="{{ category }} flash-home">
                                     <p id="flash-home">{{ message }}</p>
                                 </div>
                             {% endfor %}
@@ -41,30 +41,16 @@
                 </div>
             </div>
             <div class="row">
-                {% if rooms %}
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Room Name</th>
-                                    <th scope="col">Players</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for room in rooms %}
-                                    <tr>
-                                        <td>{{ room.board_name }}</td>
-                                        <td>{{ room.owners }}</td>
-                                        <td>
-                                            <a class="btn btn-success btn-sm play" href="{{ url_for('game',board_name=room.board_name)}}">Play</a>
-                                            <button class="btn btn-danger btn-sm delete" data-url="{{ url_for('delete_room',board_name=room.board_name, room_id=room.id) }}">Delete</button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% endif %}
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Room Name</th>
+                            <th scope="col">Players</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
 {% endblock %}
 {% block modal %}

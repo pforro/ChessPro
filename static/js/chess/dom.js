@@ -121,7 +121,7 @@ export let dom = {
 
     setBackground : function() {
         let body = document.querySelector('body');
-        body.style.backgroundColor = (gameControl.isYourTurn()) ? 'lightgrey' : '#6D6D6D';
+        body.style.backgroundColor = (gameControl.isYourTurn()) ? '#00ff4d' : 'lightgrey';
     },
 
 

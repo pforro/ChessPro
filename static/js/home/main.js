@@ -5,8 +5,7 @@ function main(){
     home.initSocketEvents();
     home.initNewGameButton();
     home.initSubmitModalBtn();
-    home.loadGamesOnStartup();
-    home.initDeleteGameButton();
+    home.loadGames();
 }
 
 

@@ -96,9 +96,9 @@ def start_game_handler(data):
 
 
 
-@socketio.on('refresh_home')
+@socketio.on('refresh_games')
 def refresh_home(data):
-    emit('refreshHome', data, room=session['room'])
+    emit('refreshGames', data, room=session['room'])
 
 
 
@@ -206,7 +206,7 @@ def confirm_email():
 
 @app.route('/newgame',methods=['POST'])
 def newgame():
-    board_name = request.form['board_name']
+    board_name = request.form['board_name'].replace('?','')
     color = request.form['color']
     opponent_id = request.form['opponent_id']
     user_id = session['id']
