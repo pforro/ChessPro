@@ -7,7 +7,6 @@ import {knight} from "./pieces/knight.js";
 import {pawn} from "./pieces/pawn.js";
 import {timer} from "./timer.js";
 import {chat} from "./chat.js";
-import {dom} from "./dom.js";
 
 
 export let gameControl = {
@@ -30,7 +29,6 @@ export let gameControl = {
             chat.autoMessage("Your turn");
             timer.startTimer();
         }
-        dom.setBackground();
     },
 
 

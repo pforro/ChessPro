@@ -119,16 +119,10 @@ export let dom = {
     },
 
 
-    setBackground : function() {
-        let body = document.querySelector('body');
-        body.style.backgroundColor = (gameControl.isYourTurn()) ? '#00ff4d' : 'lightgrey';
-    },
-
 
     initDom : function() {
         dom.buildChessBoard();
         dom.loadPieces();
-        dom.setBackground();
         dom.initLeaveGame();
     },
 
