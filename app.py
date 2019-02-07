@@ -71,13 +71,6 @@ def join(data):
     emit('joined',username,room=session['room'])
 
 
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', room=room)
-
 
 @socketio.on('send_chat_message')
 def chat_handler(data):

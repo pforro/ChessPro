@@ -30,7 +30,6 @@
 {% endblock %}
 
 
-
 {% block content %}
     <div class="content-container">
         <div class="container-fluid">
@@ -57,6 +56,9 @@
                 </div>
                 <div class="modal-body">
                     <h5 id="modal-message"></h5>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{ url_for('home') }}" type="button" class="btn btn-outline-dark">Back to home</a>
                 </div>
             </div>
         </div>

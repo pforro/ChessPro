@@ -1,5 +1,4 @@
 import {socketEvents} from "./socket_events.js";
-import {gameControl} from "./game_control.js";
 
 
 export let dom = {

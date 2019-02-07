@@ -66,6 +66,7 @@ export let home = {
             .then(() => home.socket.emit('refresh_games','refresh'));
     },
 
+
     submitEventListener : function() {
         let name = document.querySelector("#input-name").value;
         let opponent = document.querySelector("#select-opponent").value;
@@ -78,6 +79,7 @@ export let home = {
         document.querySelector("#input-name").value = "";
         $('#newgame-dialog').modal('hide');
     },
+
 
     initSubmitModalBtn : function() {
         let button = document.querySelector("#submit-modal");
@@ -135,6 +137,4 @@ export let home = {
         let tr = document.querySelector('tbody').lastElementChild;
         tr.appendChild(td);
     },
-
-
 };
