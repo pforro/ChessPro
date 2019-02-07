@@ -66,19 +66,27 @@ export let home = {
             .then(() => home.socket.emit('refresh_games','refresh'));
     },
 
+    submitEventListener : function() {
+        let name = document.querySelector("#input-name").value;
+        let opponent = document.querySelector("#select-opponent").value;
+        let color = document.querySelector("#select-color").value;
+        let formData = new FormData();
+        formData.append('board_name', name);
+        formData.append('opponent_id', opponent);
+        formData.append('color', color);
+        home.sendNewGameData(formData);
+        document.querySelector("#input-name").value = "";
+        $('#newgame-dialog').modal('hide');
+    },
 
     initSubmitModalBtn : function() {
         let button = document.querySelector("#submit-modal");
-        button.addEventListener('click',function(){
-            let name = document.querySelector("#input-name").value;
-            let opponent = document.querySelector("#select-opponent").value;
-            let color = document.querySelector("#select-color").value;
-            let formData = new FormData();
-            formData.append('board_name',name);
-            formData.append('opponent_id',opponent);
-            formData.append('color',color);
-            home.sendNewGameData(formData);
-            $('#newgame-dialog').modal('hide');
+        button.addEventListener('click',home.submitEventListener);
+        let body = document.querySelector("#newgame-dialog");
+        body.addEventListener('keydown', function(event){
+            if(event.key === 'Enter' && document.querySelector("#input-name").value){
+                home.submitEventListener();
+            }
         })
     },
 
