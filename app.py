@@ -19,6 +19,11 @@ s = URLSafeTimedSerializer('VerySecretKey')
 
 
 
+@app.errorhandler('404')
+    def error_404():
+        return render_template("error.html")
+
+
 def login_required(function):
     @wraps(function)
     def decorated_function(*args, **kwargs):
@@ -232,6 +237,8 @@ def delete_room(board_name, room_id):
     remove_room(board_name, room_id)
     flash('Game has been deleted!', 'alert-danger')
     return redirect(url_for('home'))
+
+
 
 
 

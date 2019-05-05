@@ -7,7 +7,6 @@ import {timer} from "./timer.js";
 
 export let socketEvents = {
 
-
     socket : io.connect('http://'+document.domain+':'+location.port,{transports:['websocket']}),
 
 
@@ -18,11 +17,9 @@ export let socketEvents = {
     },
 
 
-
     sendExit : function () {
         socketEvents.socket.emit('send_exit','exit');
     },
-
 
 
     sendStartGame : function(data){
@@ -31,12 +28,10 @@ export let socketEvents = {
     },
 
 
-
     sendChatMessage : function(input, usrname){
         let data = {message:input,username:usrname};
         socketEvents.socket.emit('send_chat_message',data);
     },
-
 
 
     sendTimeOut : function(){
@@ -44,11 +39,9 @@ export let socketEvents = {
     },
 
 
-
     sendKill :function(enemyId){
         socketEvents.socket.emit('send_kill', enemyId);
     },
-
 
 
     connectToServer : function() {
@@ -61,14 +54,12 @@ export let socketEvents = {
     },
 
 
-
     initTimeout : function() {
         socketEvents.socket.on('timeOut',function() {
             chat.autoMessage("Time out!");
             gameControl.setTurn();
         });
     },
-
 
 
     initStartGame : function() {
@@ -80,7 +71,6 @@ export let socketEvents = {
             },3000);
         });
     },
-
 
 
     initMove : function () {
@@ -99,7 +89,6 @@ export let socketEvents = {
     },
 
 
-
     initExit : function () {
         socketEvents.socket.on('exit', function () {
             document.querySelector('#modal-message')
@@ -111,14 +100,12 @@ export let socketEvents = {
     },
 
 
-
     initConnection : function () {
         socketEvents.socket.on('joined',function(data) {
             chat.autoMessage(`${data} has connected!`);
             socketEvents.sendStartGame(data);
         });
     },
-
 
 
     initKillEvent : function () {
@@ -135,7 +122,6 @@ export let socketEvents = {
     },
 
 
-
     initChatEvent : function() {
         socketEvents.socket.on('chatMessage',function(data){
             let chat = document.querySelector('#chat');
@@ -143,7 +129,6 @@ export let socketEvents = {
             chat.scrollTop = chat.scrollHeight;
         })
     },
-
 
 
     initSocketEvents : function(){
